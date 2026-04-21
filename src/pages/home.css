@@ -44,3 +44,109 @@ height: 100vh;
 .burgermenu.open {
     transform: translateX(0);
 }
+
+.first{
+    display: flex;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+
+.hero{
+    display: flex;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 72vh;
+}
+
+.heroimage{
+    width: 0%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #F0E1CE;
+    animation: heroscale 1s ease-out forwards 1.5s;
+}
+
+.heroinner{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border: 1px solid #F0E1CE;
+    height: 100%;
+    overflow: hidden;
+background: #000000;
+position: relative;
+    align-items: center;
+}
+
+.frame{
+    width: 0%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+border: 1px solid #F0E1CE;
+animation: heroimage 1s ease-out forwards;
+}
+
+.frame img{
+object-fit: cover;
+border: 1px solid #F0E1CE;
+width: 100%;
+    height: 100%;
+}
+.heroinner canvas,
+.heroinner iframe {
+    background: transparent !important;
+}
+
+.heroimage2{
+    scale:0.8 ;
+}
+
+.herobtn{
+      position: absolute;
+    top: 25px;
+    z-index: 100;
+
+}
+.heroframe{
+    width: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.herobtn2{
+      position: absolute;
+    bottom: 25px;
+    z-index: 100;
+
+}
+
+
+@keyframes heroscale {
+    0%{
+        width: 0%;
+    }
+    100%{
+        width: 58%;
+    }
+}
+
+
+@keyframes heroimage {
+    0%{
+        width: 0%;
+    }
+    100%{
+        width: 20%;
+    }
+}

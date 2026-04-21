@@ -107,3 +107,11 @@ button.active{
 .burgerlink:hover{
 background: rgba(240, 225, 206, 0.19);
 }
+
+.burgerlink:hover h4{
+    color: #F0E1CE;
+}
+
+.burgerlink:hover h1{
+    color: #F0E1CE;
+}
