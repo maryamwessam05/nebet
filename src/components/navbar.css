@@ -1,0 +1,56 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+nav{
+    display: flex;
+padding: 30px 35px;
+align-items: center;
+justify-content: space-between;
+align-self: stretch;
+border-bottom: 1px solid #F0E1CE;
+}
+
+button{
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    display: flex;
+padding: 16.475px 21.966px;
+flex-direction: column;
+align-items: flex-start;
+gap: 13.729px;
+border-radius: 48.051px;
+border: 1.373px solid #F0E1CE;
+}
+
+.menu-btn svg {
+  overflow: visible;
+}
+
+.line {
+  stroke: #F0E1CE;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  transition: transform 0.3s ease;
+  transform-origin: center;
+}
+
+
+.menu-btn:hover .l1 {
+  transform: rotate(90deg) translateY(-8px);
+}
+
+.menu-btn:hover .l2 {
+  transform: rotate(90deg);
+}
+
+.menu-btn:hover .l3 {
+  transform: rotate(90deg) translateY(8px);
+}
+.menu-btn:hover .l1 { transition-delay: 0s; }
+.menu-btn:hover .l2 { transition-delay: 0.05s; }
+.menu-btn:hover .l3 { transition-delay: 0.1s; }
