@@ -21,7 +21,7 @@ align-items: center;
 gap: 150px;
 border: 1px solid #F0E1CE;
 position: relative;
-height: 6000px;
+
 }
 
 
@@ -381,4 +381,41 @@ button:hover svg {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+    gap: 70px;
+    padding-bottom: 70px;
+}
+
+.origingrid{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.origincont{
+     display: flex;
+    gap: 45px;
+    will-change: transform;
+    overflow: visible;
+    width: auto;
+    padding-left: 0;
+}
+
+.origins-scroll-container {
+    height: 120vh;
+    position: relative;
+    width: 100%;
+}
+
+.origins-sticky-wrapper {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: visible;
+    padding-left: 50px;
 }

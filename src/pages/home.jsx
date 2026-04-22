@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import "./home.css";
 import Navbar from '../components/navbar';
 import { Link } from 'react-router-dom';
 import Burger from '../components/burgermenu';
-import framehero from "../assets/framehero.png";
 import Primarybtn from '../components/primarybtn';
 import UnicornScene from "unicornstudio-react";
 import ticket from "../assets/ticket.svg";
 import hier2 from "../assets/hiero02.png";
 import hier3 from "../assets/hiero03.png";
 import hier4 from "../assets/hiero04.png";
-import rec1 from "../assets/rec1.png";
-import rec2 from "../assets/rec2.png";
 import ScrollReveal from "../componentsec2txt/ScrollReveal";
 import ImageTrail from '../componentimagehover/ImageTrail';
 import img1 from "../assets/img01.png";
@@ -21,12 +18,30 @@ import img4 from "../assets/img04.png";
 import img5 from "../assets/img05.png";
 import img6 from "../assets/img06.png";
 import img7 from "../assets/img07.png";
-import ScrollStack, { ScrollStackItem }  from "../componentscrollstack/ScrollStack";
 import Title from '../components/title';
+import Origin from '../components/origin';
+import orig1 from "../assets/orig01.png";
+import orig2 from "../assets/orig02.png";
+import orig3 from "../assets/orig03.png";
+import orig4 from "../assets/orig04.png";
+import orig5 from "../assets/orig05.png";
+import { motion, useScroll, useTransform } from "framer-motion";
+
+
 
 const Home = () => {
     const [menuOpen, setMenuOpen] = useState(false);
-    
+    const originsRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: originsRef,
+        offset: ["start start", "end end"],
+    });
+    const ITEM_WIDTH = 320;
+const GAP = 45;
+const ITEMS_COUNT = 3;
+const PADDING_LEFT = 50;
+const totalDistance = (ITEMS_COUNT - 1) * (ITEM_WIDTH + GAP) - PADDING_LEFT;
+const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance]);
     return (
         <>
             <main>
@@ -140,7 +155,22 @@ const Home = () => {
                 </div>
 
                 <div className="section4">
-                    <Title text="Origins of Beauty" description="What we recognize today as beauty products are the result of centuries of refinement. Their origins, however, lie in the rituals of Ancient Egypt — where every element served both purpose and meaning." />
+                    <Title
+                        text="Origins of Beauty"
+                        description="What we recognize today as beauty products are the result of centuries of refinement. Their origins, however, lie in the rituals of Ancient Egypt — where every element served both purpose and meaning."
+                    />
+
+                    <div ref={originsRef} className="origins-scroll-container">
+                        <div className="origins-sticky-wrapper">
+                            <motion.div className="origincont" style={{ x }}>
+                                <Origin style="origin"  number="01" image={orig1} title="Eyeliner"    derivedFrom="Kohl (3000 BC)"              description="Used for protection and spiritual defense." />
+                                <Origin style="origin2" number="02" image={orig2} title="Face Mask"   derivedFrom="Milk & Honey Rituals"        description="Used for nourishment and renewal." />
+                                <Origin style="origin"  number="03" image={orig3} title="Serums"      derivedFrom="Natural Oils"                description="Used for healing and protection." />
+                                <Origin style="origin2" number="04" image={orig4} title="Eyeshadow"   derivedFrom="Malachite & Charcoal Pigments" description="Crushed minerals that add color while symbolizing protection and vitality." />
+                                <Origin style="origin"  number="05" image={orig5} title="Lip Balm"    derivedFrom="Resin & Wax Treatment"       description="Natural balms used to protect and soften lips in harsh climates." />
+                            </motion.div>
+                        </div>
+                    </div>
                 </div>
             </main>
         </>
