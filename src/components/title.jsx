@@ -1,0 +1,13 @@
+import React from 'react';
+import "./title.css";
+
+const Title = (props) => {
+    return ( 
+        <div className="title">
+            <h1>{props.text}</h1>
+            <p>{props.description}</p>
+        </div>
+     );
+}
+ 
+export default Title;

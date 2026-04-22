@@ -1,0 +1,39 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.title{
+    display: flex;
+justify-content: center;
+align-items: center;
+gap: 29px;
+width: 90%;
+flex-direction: column;
+}
+
+.title h1{
+    color: #F0E1CE;
+text-align: center;
+leading-trim: both;
+text-edge: cap;
+font-family: "GC Begia Demo";
+font-size: 79px;
+font-style: normal;
+font-weight: 300;
+line-height: 98%; /* 77.42px */
+letter-spacing: -5.53px;
+}
+
+.title p{
+    color: #F0E1CE;
+text-align: center;
+leading-trim: both;
+text-edge: cap;
+font-family: "Darker Grotesque";
+font-size: 28.07px;
+font-style: normal;
+font-weight: 300;
+line-height: 75%; /* 21.052px */
+}

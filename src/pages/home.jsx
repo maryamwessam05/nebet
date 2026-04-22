@@ -21,7 +21,8 @@ import img4 from "../assets/img04.png";
 import img5 from "../assets/img05.png";
 import img6 from "../assets/img06.png";
 import img7 from "../assets/img07.png";
-
+import ScrollStack, { ScrollStackItem }  from "../componentscrollstack/ScrollStack";
+import Title from '../components/title';
 
 const Home = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -112,7 +113,34 @@ const Home = () => {
                 </div>
 
                 <div className="section3">
-                    
+                    <div className="categ">
+                                    <h1>Makeup Rituals</h1>
+                                    <button>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="43" height="25" viewBox="0 0 43 25" fill="none">
+                                            <path
+                                                d="M28.6667 0C28.6667 1.325 29.98 3.30357 31.3094 4.96429C33.0186 7.10714 35.0611 8.97679 37.4028 10.4036C39.1587 11.4732 41.2872 12.5 43 12.5M43 12.5C41.2872 12.5 39.1569 13.5268 37.4028 14.5964C35.0611 16.025 33.0186 17.8946 31.3094 20.0339C29.98 21.6964 28.6667 23.6786 28.6667 25M43 12.5H9.53674e-07"
+                                                stroke={"#F0E1CE"}
+                                                strokeWidth="2.58333"
+                                            />
+                                        </svg>
+                                    </button>
+                                </div>
+                    <div className="categs">
+                                    <h1>Skincare Rituals</h1>
+                                    <button className="blackarrow">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="43" height="25" viewBox="0 0 43 25" fill="none">
+                                            <path
+                                                d="M28.6667 0C28.6667 1.325 29.98 3.30357 31.3094 4.96429C33.0186 7.10714 35.0611 8.97679 37.4028 10.4036C39.1587 11.4732 41.2872 12.5 43 12.5M43 12.5C41.2872 12.5 39.1569 13.5268 37.4028 14.5964C35.0611 16.025 33.0186 17.8946 31.3094 20.0339C29.98 21.6964 28.6667 23.6786 28.6667 25M43 12.5H9.53674e-07"
+                                                stroke={"#1E1E1E"}
+                                                strokeWidth="2.58333"
+                                            />
+                                        </svg>
+                                    </button>
+                                </div>
+                </div>
+
+                <div className="section4">
+                    <Title text="Origins of Beauty" description="What we recognize today as beauty products are the result of centuries of refinement. Their origins, however, lie in the rituals of Ancient Egypt — where every element served both purpose and meaning." />
                 </div>
             </main>
         </>
