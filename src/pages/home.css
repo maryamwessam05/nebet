@@ -21,6 +21,7 @@ align-items: center;
 gap: 150px;
 /* border: 1px solid #F0E1CE; */
 position: relative;
+height: 6000px;
 }
 
 
@@ -98,7 +99,6 @@ animation: heroimage 1s ease-out forwards;
 
 .frame img{
 object-fit: cover;
-border: 1px solid #F0E1CE;
 width: 100%;
     height: 100%;
 }
@@ -149,4 +149,77 @@ width: 100%;
     100%{
         width: 20%;
     }
+}
+
+.imageframe{
+     display: flex;
+    justify-content: center;
+    align-items: center;
+border: 1px solid #F0E1CE;
+width: 100%;
+height: 100%;
+overflow: hidden;
+}
+.imageframe img {
+    width: auto;
+    height: 200%; 
+    flex-shrink: 0;
+    object-fit: cover;
+}
+.imageframe {
+    display: flex;
+    align-items: flex-start; 
+}
+
+.imageframe img:nth-child(odd) {
+    animation: scroll-up 10s linear infinite;
+    transform-origin: bottom;
+    margin-top: auto;
+    width: 20%; 
+}
+
+.imageframe img:nth-child(even) {
+    animation: scroll-down 10s linear infinite;
+    transform-origin: top;
+    margin-top: 0; 
+    width: 20%;
+}
+
+@keyframes scroll-up {
+    0%   { transform: translateY(0%); }
+    100% { transform: translateY(-50%); }
+}
+
+@keyframes scroll-down {
+    0%   { transform: translateY(-50%); }
+    100% { transform: translateY(0%); }
+}
+
+.section2{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+}
+.textcont{
+    width: 90%;
+    text-align: center;
+}
+
+.textcont{
+    color: #F0E1CE;
+leading-trim: both;
+text-edge: cap;
+font-family: "GC Begia Demo";
+font-size: 4.75vw;
+font-style: normal;
+font-weight: 300;
+line-height: 116%;
+}
+
+.textcont h1 span{
+    display: inline-block;
+   
 }
