@@ -26,8 +26,16 @@ import orig3 from "../assets/orig03.png";
 import orig4 from "../assets/orig04.png";
 import orig5 from "../assets/orig05.png";
 import { motion, useScroll, useTransform } from "framer-motion";
-
-
+import prod1 from "../assets/prod01.png";
+import prod2 from "../assets/prod02.png";
+import prod3 from "../assets/prod03.png";
+import prod4 from "../assets/prod04.png";
+import prod5 from "../assets/prod05.png";
+import prod6 from "../assets/prod06.png";
+import FlyingPosters from '../componentproduct/FlyingPosters';
+import lotus from "../assets/lorus.png";
+import RotatingText from '../textprod/RotatingText';
+import bgvid from "../assets/bg.mp4";
 
 const Home = () => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -42,6 +50,7 @@ const ITEMS_COUNT = 3;
 const PADDING_LEFT = 50;
 const totalDistance = (ITEMS_COUNT - 1) * (ITEM_WIDTH + GAP) - PADDING_LEFT;
 const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance]);
+const items = [prod1, prod2, prod3, prod4, prod5, prod6];
     return (
         <>
             <main>
@@ -166,10 +175,51 @@ const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance]);
                                 <Origin style="origin"  number="01" image={orig1} title="Eyeliner"    derivedFrom="Kohl (3000 BC)"              description="Used for protection and spiritual defense." />
                                 <Origin style="origin2" number="02" image={orig2} title="Face Mask"   derivedFrom="Milk & Honey Rituals"        description="Used for nourishment and renewal." />
                                 <Origin style="origin"  number="03" image={orig3} title="Serums"      derivedFrom="Natural Oils"                description="Used for healing and protection." />
-                                <Origin style="origin2" number="04" image={orig4} title="Eyeshadow"   derivedFrom="Malachite & Charcoal Pigments" description="Crushed minerals that add color while symbolizing protection and vitality." />
+                                <Origin style="origin2" number="04" image={orig4} title="Eyeshadow"   derivedFrom="Malachite & Charcoal Pigments" description="Crushed minerals that add color while symbolizing protection." />
                                 <Origin style="origin"  number="05" image={orig5} title="Lip Balm"    derivedFrom="Resin & Wax Treatment"       description="Natural balms used to protect and soften lips in harsh climates." />
                             </motion.div>
                         </div>
+                    </div>
+                </div>
+                
+                <div className="section5">
+                    <Title text="Products" />
+                    <div className="sec5cont">
+                    <video autoPlay muted loop playsInline className="bg-video">
+                        <source src={bgvid} type="video/mp4" />
+                    </video>
+                        <div className="rotat">
+                            <h1>Egyptians Made</h1>
+                            <RotatingText
+                            texts={['Kohl', 'Eyeshadow', 'Serums', 'Facemasks' , 'Lip Balms!']}
+                            mainClassName="rotating-text-box"
+                            staggerFrom="last"
+                            initial={{ y: "100%" }}
+                            animate={{ y: 0 }}
+                            exit={{ y: "-120%" }}
+                            staggerDuration={0.025}
+                            splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+                            transition={{ type: "spring", damping: 30, stiffness: 400 }}
+                            rotationInterval={2000}
+                            splitBy="characters"
+                            auto
+                            loop
+                            />
+
+                        </div>
+                        <div style={{ height: '600px', position: 'relative' }}>
+                        <FlyingPosters
+                            items={[prod1, prod2, prod3, prod4, prod5, prod6]}
+                            planeWidth={320}
+                            planeHeight={320}
+                            distortion={3}
+                            scrollEase={0.01}
+                            cameraFov={45}
+                            cameraZ={20}
+                        />
+                        </div>
+                        <img className="lotus" src={lotus} alt="" />
+
                     </div>
                 </div>
             </main>

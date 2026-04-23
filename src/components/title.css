@@ -11,6 +11,8 @@ align-items: center;
 gap: 29px;
 width: 90%;
 flex-direction: column;
+position: relative;
+z-index: 999;
 }
 
 .title h1{
