@@ -1,0 +1,47 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.firstrit{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+
+}
+.ritherotxt{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: absolute;
+    top: 35%;
+    left: 4%;
+}
+
+.ritherotxt h1{
+    color: #F0E1CE;
+leading-trim: both;
+text-edge: cap;
+font-family: "GC Begia Demo";
+font-size: 134.158px;
+font-style: normal;
+font-weight: 300;
+line-height: 86.37%; /* 115.872px */
+text-transform: uppercase;
+text-align: left;
+}
+
+.ritherotxt p{
+   color: #F0E1CE;
+leading-trim: both;
+text-edge: cap;
+font-family: "Darker Grotesque";
+font-size: 31.18px;
+font-style: normal;
+font-weight: 300;
+line-height: 84.086%; /* 26.218px */
+}

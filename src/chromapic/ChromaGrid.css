@@ -1,0 +1,41 @@
+.chroma-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid #333;
+  transition: border-color 0.3s ease;
+  cursor: none;
+}
+
+.chroma-card:hover {
+  border-color: var(--card-border, #555);
+}
+
+.chroma-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* rect outline — hidden until hover */
+.chroma-rect-border {
+  position: absolute;
+  width: 342px;
+  height: 154px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 4px;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+  top: -999px;
+  left: -999px;
+}
+
+.chroma-active .chroma-rect-border {
+  opacity: 1;
+}

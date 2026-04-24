@@ -497,3 +497,147 @@ line-height: normal;
     position: relative;
     z-index: 999;
 }
+
+.section6{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 60px;
+    padding-bottom: 100px;
+}
+
+.sec6cont{
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("../assets/booking\ bg.svg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 570px;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.sec6cont form{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 42px;
+}
+
+.row1{
+    display: flex;
+align-items: flex-start;
+justify-content: space-between;
+}
+
+.group{
+    display: flex;
+flex-direction: column;
+gap: 10px;
+width: 48%;
+}
+
+.group label{
+    color: #1E1E1E;
+font-family: "GC Begia Demo";
+font-size: 20.55px;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
+}
+
+.group input {
+  height: 50px;
+  border: none;
+  border-bottom: 1px solid #000;
+  background: transparent;
+  outline: none;
+}
+
+.tick{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.tick button{
+    padding: 0 !important;
+    margin:6px 0 0 0 !important
+}
+
+.tick h1{
+  color: #000;
+    font-family: "Darker Grotesque";
+    font-size: 34.87px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 22px;
+    text-align: center;
+    width: 30px;
+}
+
+input[type = "date"]{
+     color: #000;
+    font-family: "Darker Grotesque";
+    font-size: 20.87px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 22px;
+    text-align: left;
+}
+
+.select-wrapper{
+  height: 50px;
+  border: none;
+  border-bottom: 1px solid #000;
+  background: transparent;
+  outline: none;
+}
+
+select{
+    width: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+     color: #000;
+    font-family: "Darker Grotesque";
+    font-size: 20.87px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 22px;
+    text-align: left;
+
+}
+
+.signup{
+    display: flex;
+align-items: flex-end;
+gap: 13.17px;
+}
+
+.circbutton{
+    width: 26.34px;
+height: 26.34px;
+border: #000 solid 1.373px;
+border-radius: 50%;
+}
+
+.signup h4{
+    color: #1E1E1E;
+text-align: left;
+font-family: Montserrat;
+font-size: 19.156px;
+font-style: normal;
+font-weight: 300;
+line-height: 23.325px; /* 121.763% */
+}
+.formbtn{
+    align-self: center;
+}
+
