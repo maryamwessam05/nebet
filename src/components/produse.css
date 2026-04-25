@@ -1,0 +1,28 @@
+.prodtitle{
+    color: #F0E1CE;
+text-align: center;
+leading-trim: both;
+text-edge: cap;
+font-family: "GC Begia Demo";
+font-size: 43px;
+font-style: normal;
+font-weight: 300;
+line-height: 116%; /* 49.88px */
+letter-spacing: -1.29px;
+}
+
+.titleprod{
+    display: flex;
+padding: 20px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+align-self: stretch;
+border: 1px solid #F0E1CE;
+}
+
+img{
+    width: 15vw;
+    height: auto;
+    min-width: 10vw;
+}

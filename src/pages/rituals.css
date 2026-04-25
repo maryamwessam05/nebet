@@ -3,7 +3,14 @@
     padding: 0;
     box-sizing: border-box;
 }
-
+.section3r{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 30px;
+}
 .firstrit{
     width: 100%;
     display: flex;
@@ -22,7 +29,7 @@
     left: 4%;
 }
 
-.ritherotxt h1{
+.ritualhead{
     color: #F0E1CE;
 leading-trim: both;
 text-edge: cap;
@@ -31,7 +38,6 @@ font-size: 134.158px;
 font-style: normal;
 font-weight: 300;
 line-height: 86.37%; /* 115.872px */
-text-transform: uppercase;
 text-align: left;
 }
 
@@ -45,3 +51,317 @@ font-style: normal;
 font-weight: 300;
 line-height: 84.086%; /* 26.218px */
 }
+
+.ritcat{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.categr{
+ display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+    background-image: url("../assets/makeup.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: sticky;
+    z-index: 1;
+    top: 0;
+    overflow: hidden;
+    gap: 20px;
+    flex-direction: column;
+    animation: expandIn 3s linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 50%;
+}
+
+.categr h1 {
+color: #F0E1CE;
+text-align: center;
+leading-trim: both;
+text-edge: cap;
+font-family: "GC Begia Demo";
+font-size: 90px;
+font-style: normal;
+font-weight: 300;
+line-height: 60%; /* 104.4px */
+letter-spacing: -6.3px;
+}
+.categsr h1{
+color: #1E1E1E;
+text-align: center;
+leading-trim: both;
+text-edge: cap;
+font-family: "GC Begia Demo";
+font-size: 90px;
+font-style: normal;
+font-weight: 300;
+line-height: 60%; /* 104.4px */
+letter-spacing: -6.3px;
+}
+.categr p {
+color: #F0E1CE;
+leading-trim: both;
+text-edge: cap;
+font-family: "Darker Grotesque";
+font-size: 31.18px;
+font-style: normal;
+font-weight: 300;
+line-height: 84.086%; /* 26.218px */
+}
+.categsr p{
+color: #1E1E1E;
+leading-trim: both;
+text-edge: cap;
+font-family: "Darker Grotesque";
+font-size: 31.18px;
+font-style: normal;
+font-weight: 300;
+line-height: 84.086%; /* 26.218px */
+}
+.categsr {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+    flex-direction: column;
+    background-image: url("../assets/skinc.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    overflow: hidden;
+    margin-left: auto;
+    gap: 20px;
+
+    animation: expandInRight 3s linear both, categsFadeIn linear both;
+    animation-timeline: view(), view();
+    animation-range: entry 0% entry 50%, entry 0% entry 40%;
+}
+
+@keyframes expandInRight {
+    from {
+        width: 0%;
+        padding: 0;
+        margin-left: 100%;
+    }
+    to {
+        width: 100%;
+        padding: 50px 25px;
+        margin-left: 0%;
+    }
+}
+
+.categs h1{
+    color: #1E1E1E;
+text-align: left;
+leading-trim: both;
+text-edge: cap;
+font-family: "GC Begia Demo";
+font-size: 131.107px;
+font-style: normal;
+font-weight: 300;
+line-height: 116%; /* 152.084px */
+letter-spacing: -9.177px;
+order: 2;
+}
+.categr button{
+    outline: none;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    padding: 11px 21.966px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 13.729px;
+    border-radius: 48.051px;
+    border: 1.373px solid #F0E1CE;
+}
+.blackarrowr{
+        outline: none;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    padding: 11px 21.966px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 13.729px;
+    border-radius: 48.051px;
+    border: 1.373px solid #1E1E1E;
+}
+
+.ritual h1{
+color: #F0E1CE;
+text-align: center;
+leading-trim: both;
+text-edge: cap;
+font-family: "GC Begia Demo";
+font-size: 90px;
+font-style: normal;
+font-weight: 300;
+line-height: 116%; /* 104.4px */
+letter-spacing: -6.3px;
+}
+
+.ritualtit{
+    display: flex;
+flex-direction: column;
+align-items: center;
+gap: 30px;
+}
+
+.section3r h2{
+    color: #F0E1CE;
+text-align: center;
+leading-trim: both;
+text-edge: cap;
+font-family: "GC Begia Demo";
+font-size: 64px;
+font-style: normal;
+font-weight: 300;
+line-height: 116%; /* 74.24px */
+letter-spacing: -1.92px;
+margin-top: 30px;
+}
+
+.prod1{
+    display: flex;
+width: 246px;
+transform: rotate(-13.476deg);
+flex-direction: column;
+align-items: center;
+gap: 4px;
+border: 1px solid #F0E1CE;
+background: #1E1E1E;
+    transition: transform 0.3s ease;
+
+}
+
+.prod2{
+        display: flex;
+width: 246px;
+transform: rotate(-4.174deg);
+flex-direction: column;
+align-items: center;
+gap: 4px;
+border: 1px solid #F0E1CE;
+background: #1E1E1E;
+    transition: transform 0.3s ease;
+}
+
+.prod3{
+        display: flex;
+width: 246px;
+transform: rotate(15.1deg);
+flex-direction: column;
+align-items: center;
+gap: 4px;
+border: 1px solid #F0E1CE;
+background: #1E1E1E;
+    transition: transform 0.3s ease;
+}
+
+.productsused{
+    display: flex;
+align-items: center;
+gap: 105px;
+}
+.prod1:hover{
+    transform: rotate(0) scale(1.1);
+    background-color: #F0E1CE;
+border: 1px solid #1E1E1E;
+}
+.prod1:hover .prodtitle{
+    color: #1E1E1E;
+}
+.prod2:hover{
+    transform: rotate(0) scale(1.1);
+    background-color: #F0E1CE;
+}
+.prod3:hover{
+    transform: rotate(0) scale(1.1);
+    background-color: #F0E1CE;
+}
+.section3r p{
+    color: #F0E1CE;
+text-align: center;
+leading-trim: both;
+text-edge: cap;
+font-family: "Darker Grotesque";
+font-size: 31.18px;
+font-style: normal;
+font-weight: 300;
+line-height: 84.086%; /* 26.218px */
+}
+.togglesection{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 70px;
+    flex-direction: column;
+    width: 100%;
+}
+.toggle{
+    display: flex;
+width: 411px;
+padding: 7px 10px;
+align-items: flex-start;
+gap: 10px;
+border: 1px solid #F0E1CE;
+background: #1E1E1E;
+}
+
+.activebtn{
+    outline: none;
+    background: none;
+    cursor: pointer;
+    border-radius: 0 !important;
+    display: flex;
+    height: 56px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex: 1 0 0;
+    background: #F0E1CE;
+    color: #1E1E1E;
+text-align: center;
+leading-trim: both;
+text-edge: cap;
+font-family: "GC Begia Demo";
+font-size: 36.607px;
+font-style: normal;
+font-weight: 300;
+line-height: 116%; /* 42.464px */
+letter-spacing: -2.562px;
+}
+
+.unactivebtn{
+   outline: none;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    display: flex;
+    height: 56px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex: 1 0 0;
+    border-radius: 0 !important;
+
+   border: 1px solid #F0E1CE;
+    color: #F0E1CE;
+text-align: center;
+leading-trim: both;
+text-edge: cap;
+font-family: "GC Begia Demo";
+font-size: 36.607px;
+font-style: normal;
+font-weight: 300;
+line-height: 116%; /* 42.464px */
+letter-spacing: -2.562px;}
