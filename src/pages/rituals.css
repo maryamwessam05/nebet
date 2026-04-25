@@ -28,6 +28,17 @@
     top: 35%;
     left: 4%;
 }
+.ritherotxt h1{
+    color: #F0E1CE;
+leading-trim: both;
+text-edge: cap;
+font-family: "GC Begia Demo";
+font-size: 134.158px;
+font-style: normal;
+font-weight: 300;
+line-height: 97.598%; /* 130.935px */
+text-transform: uppercase;
+}
 
 .ritualhead{
     color: #F0E1CE;
@@ -280,13 +291,35 @@ border: 1px solid #1E1E1E;
 .prod1:hover .prodtitle{
     color: #1E1E1E;
 }
+.prod2:hover .prodtitle{
+    color: #1E1E1E;
+}
+.prod3:hover .prodtitle{
+    color: #1E1E1E;
+}
 .prod2:hover{
     transform: rotate(0) scale(1.1);
     background-color: #F0E1CE;
+border: 1px solid #1E1E1E;
+
 }
 .prod3:hover{
     transform: rotate(0) scale(1.1);
     background-color: #F0E1CE;
+border: 1px solid #1E1E1E;
+
+}
+.prod1:hover .titleprod{
+border: 1px solid #1E1E1E;
+
+}
+.prod2:hover .titleprod{
+border: 1px solid #1E1E1E;
+
+}
+.prod3:hover .titleprod{
+border: 1px solid #1E1E1E;
+
 }
 .section3r p{
     color: #F0E1CE;
@@ -303,7 +336,7 @@ line-height: 84.086%; /* 26.218px */
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 70px;
+    gap: 100px;
     flex-direction: column;
     width: 100%;
 }
