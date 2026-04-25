@@ -398,3 +398,53 @@ font-style: normal;
 font-weight: 300;
 line-height: 116%; /* 42.464px */
 letter-spacing: -2.562px;}
+
+.build{
+    display: flex;
+width: 100%;
+padding-left: 86px;
+justify-content: space-between;
+align-items: center;
+height: 100vh;
+}
+
+.buildtxt{
+    display: flex;
+width: 21%;
+flex-direction: column;
+align-items: flex-start;
+gap: 9px;
+flex-shrink: 0;
+}
+.your{
+    align-self: flex-end;
+}
+
+.buildtxt h2{
+    color: #F0E1CE;
+leading-trim: both;
+text-edge: cap;
+font-family: "GC Begia Demo";
+font-size: 79px;
+font-style: normal;
+font-weight: 300;
+line-height: 96%; /* 75.84px */
+letter-spacing: -5.53px;
+}
+
+.buildtxt p{
+    color: #F0E1CE;
+leading-trim: both;
+text-edge: cap;
+font-family: "Darker Grotesque";
+font-size: 28.07px;
+font-style: normal;
+font-weight: 300;
+line-height: 75%; /* 21.052px */
+}
+
+.buildsteps{
+    display: flex;
+    width: 70%;
+    height: 100%;
+}

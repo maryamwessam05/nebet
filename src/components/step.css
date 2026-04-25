@@ -1,0 +1,134 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.step1 {
+    height: 36%;
+    width: 33%;
+    cursor: pointer;
+    transition: height 0.45s cubic-bezier(.4,0,.2,1);
+}
+.step1--open {
+    height: 100%;
+}
+.step1grey{
+display: flex;
+width: 100%;
+padding: 10px;
+align-items: flex-end;
+align-self: stretch;
+height: 100%;
+background: #1E1E1E;
+}
+.step1white{
+display: flex;
+width: 100%;
+padding: 10px;
+align-items: flex-end;
+align-self: stretch;
+height: 100%;
+background: #F0E1CE;
+}
+.innergrey{
+    display: flex;
+flex-direction: column;
+justify-content: space-between;
+align-items: flex-start;
+flex: 1 0 0;
+height: 100%;
+align-self: stretch;
+border: 1px solid #F0E1CE;
+background: #1E1E1E;
+color: #F0E1CE;
+
+
+}
+.innerwhite{
+    display: flex;
+flex-direction: column-reverse;
+justify-content: space-between;
+align-items: flex-start;
+flex: 1 0 0;
+height: 100%;
+align-self: stretch;
+border: 1px solid #1E1E1E;
+background: #F0E1CE;
+color: #1E1E1E;
+
+
+}
+.intern {
+    padding: 15px 0 15px 15px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    align-self: stretch;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.intern--open {
+    display: flex;
+    opacity: 1;
+}
+.intern h5{
+leading-trim: both;
+text-edge: cap;
+font-family: "Darker Grotesque";
+font-size: 40px;
+font-style: normal;
+font-weight: 600;
+line-height: 75%; /* 30px */
+}
+
+.intern p{
+leading-trim: both;
+text-edge: cap;
+font-family: "Darker Grotesque";
+font-size: 28.07px;
+font-style: normal;
+font-weight: 300;
+line-height: 75%; /* 21.052px */
+}
+
+.step{
+    display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 20px;
+align-self: stretch;
+overflow: hidden;
+}
+
+.step h1{
+
+font-family: "Darker Grotesque";
+    font-size: 265.145px;
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: -8.704px;
+    transform: translateY(-29px) translateX(-68px);
+}
+
+.step h5{
+leading-trim: both;
+text-edge: cap;
+font-family: "Darker Grotesque";
+font-size: 28.07px;
+font-style: normal;
+font-weight: 300;
+line-height: 75%; /* 21.052px */
+margin-left: 15px;
+}
+
+.number{
+    display: flex;
+align-items: center;
+width: 187px;
+height: 163px;
+}
+
+

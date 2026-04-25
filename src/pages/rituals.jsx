@@ -24,12 +24,14 @@ import stp8 from "../assets/stp7.jpg"
 import prodcard4 from "../assets/prod04card.png"
 import prodcard5 from "../assets/prod05card.png"
 import prodcard6 from "../assets/prod06card.png"
-
+import build from "../assets/build.png"
+import Step from '../components/step';
 
 
 const Rituals = () => {
     const [activeTab, setActiveTab] = useState('eye');
     const [menuOpen, setMenuOpen] = useState(false);
+const [openSteps, setOpenSteps] = useState(new Set());
     const demoItems = [
     { link: '#', text: '01.  Prepare the eyes with natural oils', image: stp1 },
     { link: '#', text: '02. Apply kohl along the lash line', image: stp2 },
@@ -42,7 +44,9 @@ const Rituals = () => {
     { link: '#', text: '03. Seal with protective oils', image: stp7 },
     { link: '#', text: '04. Impress with glowing skin', image: stp8 }
     ];
-
+    const handleStepClick = (step) => {
+    setOpenSteps(prev => new Set([...prev, step]));
+};
 
     return ( 
         <>
@@ -218,8 +222,32 @@ const Rituals = () => {
                 <div className="build">
                     <div className="buildtxt">
                         <h2>Build</h2>
-                        <h2>Your</h2>
+                        <h2 className='your'>Your</h2>
                         <h2>Routine</h2>
+                        <p>Click on the boxes to know</p>
+                        <img src={build} alt="" />
+                    </div>
+                    <div className="buildsteps">
+                        <Step 
+                            card="step1grey" inner="innergrey" step="stepb" 
+                            tit="Cleanse" desc="Remove impurities using natural oils." 
+                            number="01" steptext="Step 1"
+                            isOpen={openSteps.has(1)} onClick={() => handleStepClick(1)}
+                        />           
+                        <Step 
+                            card="step1white" inner="innerwhite" step="stepw" 
+                            tit="Treat" desc="Restore with nutrient-rich blends." 
+                            number="02" steptext="Step 2"
+                            isOpen={openSteps.has(2)} onClick={() => handleStepClick(2)}
+
+                        />              
+                        <Step 
+                            card="step1grey" inner="innergrey" step="stepb" 
+                            tit="Enhance" desc="Apply pigments and finishing elements." 
+                            number="03" steptext="Step 3"
+                            isOpen={openSteps.has(3)} onClick={() => handleStepClick(3)}
+
+                        />              
                     </div>
                 </div>
 
