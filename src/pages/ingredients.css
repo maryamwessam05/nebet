@@ -1,0 +1,128 @@
+.heroingredients{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.ingherotxt{
+    display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+position: relative;
+background: radial-gradient(50% 50% at 50% 50%, #000 0%, rgba(0, 0, 0, 0.00) 100%), radial-gradient(50% 50% at 50% 50%, #000 0%, rgba(0, 0, 0, 0.00) 100%);z-index: 999;
+}
+.cardsel{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.ingredcardlist{
+    display: flex;
+align-items: center;
+gap: 26px;
+width: 100%;
+}
+
+.ingredients{
+    width: 100%;
+}
+.ingred-scroll-container {
+  height: calc(11 * 400px); /* or better: */
+  height: 500vh; /* adjust to taste — more vh = slower/longer scroll */
+  position: relative;
+}
+
+.ingred-sticky-wrapper {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.origincont {
+  display: flex;
+  gap: 45px;
+  padding-left: 50px;
+  will-change: transform;
+}
+
+.featitle{
+    color: #1E1E1E;
+text-align: center;
+leading-trim: both;
+text-edge: cap;
+font-family: "GC Begia Demo";
+font-size: 200px;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
+text-transform: uppercase;
+}
+.featuredsec{
+display: flex;
+padding: 38px 0;
+flex-direction: column;
+align-items: flex-start;
+background: #F0E1CE;
+width: 100%;
+
+}
+
+
+
+.content1 p{
+    color: #1E1E1E;
+leading-trim: both;
+text-edge: cap;
+font-family: "Darker Grotesque";
+font-size: 31.18px;
+font-style: normal;
+font-weight: 300;
+line-height: 84.086%; /* 26.218px */
+width: 30%;
+}
+.kohlprod{
+    width: 300px;
+    max-width: 400px;
+}
+.since{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    align-items: flex-end;
+}
+
+.since span{
+    color: #1E1E1E;
+text-align: right;
+font-family: "Darker Grotesque";
+font-size: 30px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.since h1{
+    color: #1E1E1E;
+text-align: center;
+font-family: "Footlight MT Light";
+font-size: 90px;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
+text-transform: uppercase;
+}
+.content1{
+    display: flex;
+width: 100%;
+padding: 0 44px;
+margin-top: -100px;
+justify-content: space-between;
+align-items: flex-end;
+}
