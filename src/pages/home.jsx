@@ -121,7 +121,6 @@ const Home = () => {
                                 <img src={hier3} alt="" />
                                 <img src={hier4} alt="" />
                                 <img src={hier2} alt="" />
-                                {/* duplicated for seamless loop */}
                                 <img src={hier4} alt="" />
                                 <img src={hier2} alt="" />
                                 <img src={hier3} alt="" />
