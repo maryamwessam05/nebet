@@ -72,3 +72,36 @@ leading-trim: both;
 
 text-edge: cap;
 }
+
+.primarybtn3{
+    display: flex;
+padding: 9px 30px;
+flex-direction: row-reverse;
+align-items: center;
+gap: 13.729px;
+justify-content: center;
+border-radius: 48.051px;
+border: 0.5px solid #F0E1CE;
+background: #1E1E1E;
+
+cursor: pointer;
+transition: all 0.3s ease;
+width: fit-content;
+}
+
+.primarybtn3:hover{
+  box-shadow: 0 4px 6px 0 #FFE4A6;
+}
+
+.primarybtn3 h3{
+color: #F0E1CE;
+text-align: center;
+font-family: "GC Begia Demo";
+font-size: 19.42px;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
+leading-trim: both;
+
+text-edge: cap;
+}

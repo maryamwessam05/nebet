@@ -1,0 +1,71 @@
+.errorpage{
+    width: 100%;
+    display: flex;;
+flex-direction: column;
+align-items: center;
+gap: 24px;
+
+}
+
+.errorlinks{
+    display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 28px;
+}
+
+.errorlink{
+    color: #F0E1CE;
+font-family: "Darker Grotesque";
+font-size: 37.833px;
+font-style: normal;
+font-weight: 400;
+transition: all 300ms ease;
+line-height: normal;
+}
+.errorlink:hover{
+    color: #f0e1ce8b;
+
+}
+.errorcont{
+    display: flex;
+justify-content: center;
+align-items: center;
+gap: 68px;
+}
+
+.er404{
+    display: flex;
+}
+
+.zero {
+  animation: rotateze 5s ease infinite;
+}
+
+@keyframes rotateze {
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+
+.ertxt{
+    display: flex;
+flex-direction: column;
+align-items: center;
+gap: 29px;
+}
+
+.ertxt h2{
+    color: #F0E1CE;
+text-align: center;
+leading-trim: both;
+text-edge: cap;
+font-family: "GC Begia Demo";
+font-size: 53.37px;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
+}
