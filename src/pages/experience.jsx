@@ -14,13 +14,19 @@ import Expect from '../components/expect';
 import ex1 from "../assets/ex01.png"
 import ex2 from "../assets/ex02.png"
 import ex3 from "../assets/ex03.png"
-
+import minus from "../assets/minus.svg";
+import plus from "../assets/plus.svg";
+import arrow from "../assets/arrow.svg"
+import ticket from "../assets/ticket.svg";
 
 
 
 const Experience = () => {
                 const [menuOpen, setMenuOpen] = useState(false);
-    
+                    const [num, setNum] = useState(0);
+
+        const increment = () => setNum(num + 1);
+    const decrement = () => setNum(num - 1);
     return ( 
         <>
            <ClickSpark
@@ -75,6 +81,67 @@ const Experience = () => {
                         </div>  
                         </div>
                         
+                    </div>
+                </div>
+
+                <div className="section6">
+                    <Title text="Experience the Ritual" />
+                    <div className="sec6cont">
+                        <form action="">
+                            <div className="row1">
+                                <div className="group">
+                                    <label htmlFor="">First Name</label>
+                                    <input type="text" />
+                                </div>
+                                <div className="group">
+                                    <label htmlFor="">Last Name</label>
+                                    <input type="text" />
+                                </div>
+
+                            </div>
+                            <div className="row1">
+                                <div className="group">
+                                    <label htmlFor="">Email</label>
+                                    <input type="text" />
+                                </div>
+                                <div className="group">
+                                    <label htmlFor="">Number of tickets</label>
+                                    <div className="tick">
+                                    <button type="button" onClick={decrement}><img src={minus} alt="" /></button>
+                                    <h1>{num}</h1>
+                                    <button type="button" onClick={increment}><img src={plus} alt="" /></button>
+                                    </div>
+                                    
+                                </div>
+
+                            </div>
+                            <div className="row1">
+                                <div className="group">
+                                    <label htmlFor="">Date</label>
+                                    <input type="date" />
+                                </div>
+                                <div className="group">
+                                <label htmlFor="time-slot">Date</label>
+                                <div className="select-wrapper">
+                                    <select id="time-slot">
+                                    <option value="">Select a time</option>
+                                    <option value="9-11am">9 - 11 AM</option>
+                                    <option value="1-3pm">1 - 3 PM</option>
+                                    <option value="4-6pm">4 - 6 PM</option>
+                                    </select>
+                                </div>
+                                </div>
+
+                            </div>
+                            <div className="signup">
+                            <div className="circbutton"></div>
+                            <h4>Sign up for news and updates</h4>
+                        </div>
+                        <div className="formbtn">
+                            <Primarybtn style="primarybtn" icon={ticket} text="Book Tickets" />
+
+                        </div>
+                        </form>
                     </div>
                 </div>
                 <Footer />
