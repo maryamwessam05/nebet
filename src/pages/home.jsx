@@ -285,7 +285,6 @@ const Home = () => {
                                     <option value="9-11am">9 - 11 AM</option>
                                     <option value="1-3pm">1 - 3 PM</option>
                                     <option value="4-6pm">4 - 6 PM</option>
-                                    <option value="7-9pm">7 - 9 PM</option>
                                     </select>
                                 </div>
                                 </div>
