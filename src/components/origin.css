@@ -8,8 +8,8 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 26.237px;
-    width: 320px;
-    min-width: 320px;   
+    width: 270px;
+    min-width: 180px;   
     flex-shrink: 0;       
     padding-bottom: 25px;
     scroll-snap-align: start;
@@ -22,8 +22,8 @@
     align-items: flex-start;
     gap: 26.237px;
     padding-bottom: 25px;
-    width: 320px;
-    min-width: 320px;      
+    min-width: 180px;
+    width: 270px;        
     flex-shrink: 0;        
     scroll-snap-align: start;
 }
@@ -39,13 +39,13 @@ letter-spacing: -7.346px;
 }
 
 .origcontimg {
-    width: 88%;
-    height: 348px;
+        width: 87%;
+    height: 234px;
     overflow: hidden;
-    object-fit: cover;
 }
 
 .origcontimg img {
+    object-fit: cover;
     width: 100%;
     height: 100%;
     filter: grayscale(0%);
@@ -64,7 +64,7 @@ color: #F0E1CE;
 leading-trim: both;
 text-edge: cap;
 font-family: "GC Begia Demo";
-font-size: 47.227px;
+font-size: 39px;
 font-style: normal;
 font-weight: 300;
 line-height: 98%; /* 46.283px */
@@ -76,7 +76,7 @@ letter-spacing: -3.306px;
 leading-trim: both;
 text-edge: cap;
 font-family: "Darker Grotesque";
-font-size: 25px;
+font-size: 20px;
 font-style: normal;
 font-weight: 300;
 line-height: 116%; /* 41.84px */
@@ -87,7 +87,7 @@ line-height: 116%; /* 41.84px */
 leading-trim: both;
 text-edge: cap;
 font-family: "Darker Grotesque";
-font-size: 25px;
+font-size: 20px;
 font-style: normal;
 font-weight: 600;
 line-height: 116%;
@@ -98,7 +98,7 @@ line-height: 116%;
 leading-trim: both;
 text-edge: cap;
 font-family: "Darker Grotesque";
-font-size: 25px;
+font-size: 19px;
 font-style: normal;
 font-weight: 300;
 line-height: 75%; /* 27.052px */
@@ -108,4 +108,14 @@ line-height: 75%; /* 27.052px */
     display: flex;
     flex-direction: column;
     gap: 4px;
+}
+
+@media (min-width: 600px) and (max-width: 1024px){
+  .origin ,.origin2{
+    width: 200px;
+  }
+.origcontimg{
+    width: 100%;
+}
+
 }

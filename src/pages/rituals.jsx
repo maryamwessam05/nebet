@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/navbar';
 import { Link } from 'react-router-dom';
 import Burger from '../components/burgermenu';
@@ -26,12 +26,26 @@ import prodcard5 from "../assets/prod05card.png"
 import prodcard6 from "../assets/prod06card.png"
 import build from "../assets/build.png"
 import Step from '../components/step';
+import { supabase } from "../supabase";
 
 
 const Rituals = () => {
     const [activeTab, setActiveTab] = useState('eye');
     const [menuOpen, setMenuOpen] = useState(false);
 const [openSteps, setOpenSteps] = useState(new Set());
+    const [content, setContent] = useState({});
+
+     useEffect(() => {
+            const getContent = async () => {
+                const res = await supabase.from("webcontent").select("*");
+                const map = {};
+                res.data.forEach(item => { map[item.identifier] = item; });
+                setContent(map);
+            };
+            getContent();
+        }, []);
+
+
     const demoItems = [
     { link: '#', text: '01.  Prepare the eyes with natural oils', image: stp1 },
     { link: '#', text: '02. Apply kohl along the lash line', image: stp2 },
@@ -57,25 +71,25 @@ const [openSteps, setOpenSteps] = useState(new Set());
         sparkCount={8}
         duration={400}
         >
+                    <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+                    <Burger menuOpen={menuOpen} setMenuOpen={setMenuOpen} />  
             <main>
                 
                 <div className="firstrit">
-                    <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-                    <Burger menuOpen={menuOpen} setMenuOpen={setMenuOpen} />  
                     <div style={{ width: '100%' , height: "70vh"}}>
                     <ChromaCard item={{ image: rithero }} />
                     </div>
                     <div className="ritherotxt">
-                    <h1>The Rituals</h1>
-                    <p>Beauty in Ancient Egypt was not applied — it was performed.</p>
-                </div>
+                        <h1>{content.rituals_hero_title?.text}</h1>
+                        <p>{content.rituals_hero_subtitle?.text}</p>
+                    </div>
                 </div>
 
                 <div className="ritcat">
                     <div className="categr">
                                     <h1>Makeup Rituals</h1>
                                     <p>Pigments of power, protection, and identity.</p>
-                                    <button>
+                                    <button className='categrbtn'>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="43" height="25" viewBox="0 0 43 25" fill="none">
                                             <path
                                                 d="M28.6667 0C28.6667 1.325 29.98 3.30357 31.3094 4.96429C33.0186 7.10714 35.0611 8.97679 37.4028 10.4036C39.1587 11.4732 41.2872 12.5 43 12.5M43 12.5C41.2872 12.5 39.1569 13.5268 37.4028 14.5964C35.0611 16.025 33.0186 17.8946 31.3094 20.0339C29.98 21.6964 28.6667 23.6786 28.6667 25M43 12.5H9.53674e-07"
@@ -221,22 +235,20 @@ const [openSteps, setOpenSteps] = useState(new Set());
 
                 <div className="build">
                     <div className="buildtxt">
-                        <h2>Build</h2>
-                        <h2 className='your'>Your</h2>
-                        <h2>Routine</h2>
-                        <p>Click on the boxes to know</p>
+                        <h2>{content.rituals_build_title?.text}</h2>
+                        <p>{content.rituals_build_title?.desc}</p>
                         <img src={build} alt="" />
                     </div>
                     <div className="buildsteps">
                         <Step 
                             card="step1grey" inner="innergrey" step="stepb" 
-                            tit="Cleanse" desc="Remove impurities using natural oils." 
+                            tit={content.rituals_step1?.text} desc={content.rituals_step1?.desc}
                             number="01" steptext="Step 1"
                             isOpen={openSteps.has(1)} onClick={() => handleStepClick(1)}
                         />           
                         <Step 
                             card="step1white" inner="innerwhite" step="stepw" 
-                            tit="Treat" desc="Restore with nutrient-rich blends." 
+                            tit={content.rituals_step2?.text} desc={content.rituals_step2?.desc}
                             number="02" steptext="Step 2"
                             isOpen={openSteps.has(2)} onClick={() => handleStepClick(2)}
 

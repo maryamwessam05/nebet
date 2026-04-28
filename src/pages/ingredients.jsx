@@ -23,9 +23,13 @@ import {supabase} from "../supabase"
 
 
 
+
+
 const Ingredients = () => {
             const [menuOpen, setMenuOpen] = useState(false);
             const [product, setProduct] = useState([ ]); 
+            const [content, setContent] = useState({});
+            
     useEffect(()=> {
         const getProducts = async() => {
             const res = await supabase.from("product").select(`*`);
@@ -34,6 +38,15 @@ const Ingredients = () => {
         getProducts();
 
     },[])
+     useEffect(() => {
+            const getContent = async () => {
+                const res = await supabase.from("webcontent").select("*");
+                const map = {};
+                res.data.forEach(item => { map[item.identifier] = item; });
+                setContent(map);
+            };
+            getContent();
+        }, []);
     const originsRef = useRef(null);
 
              const { scrollYProgress } = useScroll({
@@ -55,15 +68,15 @@ const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance]);
         sparkCount={8}
         duration={400}
         >
-            <main>
-                <div className="first">
                     <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
                     <Burger menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+            <main>
+                <div className="ingredfirst">
 
                 <div className="heroingredients">
                 <div className="ingherotxt">
-                    <BlurText text="The" delay={200} animateBy="words" direction="top" className="originsub" />
-                    <BlurText text="Elements" delay={400} animateBy="Origins" direction="top" className="originstit" />
+                    <BlurText text={content.ingredients_hero_the?.text} delay={200} animateBy="words" direction="top" className="originsub" />
+                    <BlurText text={content.ingredients_hero_title?.text} delay={400} animateBy="Origins" direction="top" className="originstit" />
                 </div>
                 <div className="cardsel">
                     <TiltedCard
@@ -133,7 +146,8 @@ const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance]);
                 </div>
 
                 <div className="ingredients">
-                    <Title text="Ingredients" />
+                    <Title text={content.ingredients_section_title?.text} />
+                    
 
                     <div ref={originsRef} className="ingred-scroll-container">
                         <div className="ingred-sticky-wrapper">
@@ -176,12 +190,12 @@ const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance]);
                     </div>
 
                     <div className="content1">
-                        <p>One of the most iconic elements of Ancient Egyptian beauty, kohl was used not only to define the eyes but to protect against sunlight and ward off harm. Its presence extended beyond aesthetics into belief and identity.</p>
+                        <p>{content.ingredients_kohl_body?.text}</p>
                         <img className='kohlprod' src={kohlprod} alt="" />
                         <div className="since">
-                            <span>Since</span>
-                            <h1>3000BC</h1>
-                            <Primarybtn text="See the Ritual" style="primarybtn" />
+                            <span>{content.ingredients_kohl_since?.text}</span>
+                            <h1>{content.ingredients_kohl_date?.text}</h1>
+                            <Primarybtn text={content.ingredients_kohl_btn?.text} style="primarybtn" />
                         </div>
                     </div>
                 </div>

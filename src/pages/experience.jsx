@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Burger from '../components/burgermenu';
 import Primarybtn from '../components/primarybtn';
@@ -18,13 +18,26 @@ import minus from "../assets/minus.svg";
 import plus from "../assets/plus.svg";
 import arrow from "../assets/arrow.svg"
 import ticket from "../assets/ticket.svg";
+import { supabase } from "../supabase";
+
+
 
 
 
 const Experience = () => {
                 const [menuOpen, setMenuOpen] = useState(false);
                     const [num, setNum] = useState(0);
-
+                    const [content, setContent] = useState({});
+                    
+ useEffect(() => {
+        const getContent = async () => {
+            const res = await supabase.from("webcontent").select("*");
+            const map = {};
+            res.data.forEach(item => { map[item.identifier] = item; });
+            setContent(map);
+        };
+        getContent();
+    }, []);
         const increment = () => setNum(num + 1);
     const decrement = () => setNum(num - 1);
     return ( 
@@ -36,18 +49,19 @@ const Experience = () => {
         sparkCount={8}
         duration={400}
         >
-            <main>
-                <div className="first">
                     <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
                     <Burger menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+            <main>
+                <div className="first">
                     <div className="ingherotxt">
-                        <BlurText text="The" delay={200} animateBy="words" direction="top" className="originsub" />
-                        <BlurText text="NEBET" delay={400} animateBy="Origins" direction="top" className="originstit" />
+                        <BlurText text={content.experience_hero_the?.text} delay={200} animateBy="words" direction="top" className="originsub" />
+                        <BlurText text={content.experience_hero_title?.text} delay={400} animateBy="Origins" direction="top" className="originstit" />
                     </div>
                     <Preview />
                 </div>
                 <div className="whatto">
-                    <Title text="What to Expect" />
+                    <Title text={content.experience_whatto_title?.text} />
+                    
                     <div className="expectgrid">
                         <Expect style="exdark" stylexp="exptxt" title="Immersive Exploration" desc="Experience rituals through interactive visuals and storytelling." img={ex1} />
                         <Expect style="exlight" stylexp="exptxtl" title="Ritual-Based Displays" desc="Discover how beauty was practiced step by step." img={ex2} />
@@ -85,7 +99,8 @@ const Experience = () => {
                 </div>
 
                 <div className="section6">
-                    <Title text="Experience the Ritual" />
+                    <Title text={content.experience_form_title?.text} />
+                    
                     <div className="sec6cont">
                         <form action="">
                             <div className="row1">
@@ -135,7 +150,8 @@ const Experience = () => {
                             </div>
                             <div className="signup">
                             <div className="circbutton"></div>
-                            <h4>Sign up for news and updates</h4>
+                            <h4>{content.experience_signup_label?.text}</h4>
+
                         </div>
                         <div className="formbtn">
                             <Primarybtn style="primarybtn" icon={ticket} text="Book Tickets" />

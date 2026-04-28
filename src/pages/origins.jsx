@@ -23,6 +23,8 @@ import old1 from "../assets/era01.png"
 import old2 from "../assets/era02.png"
 import old3 from "../assets/era03.png"
 import ScrollReveal from "../componentsec2txt/ScrollReveal";
+import { supabase } from "../supabase";
+
 
 
 const products = [
@@ -110,7 +112,17 @@ const [cardFading, setCardFading] = useState(false);
 const [activeEra, setActiveEra] = useState(0);
 const [eraFading, setEraFading] = useState(false);
 const [fontsReady, setFontsReady] = useState(false);
+    const [content, setContent] = useState({});
 
+ useEffect(() => {
+        const getContent = async () => {
+            const res = await supabase.from("webcontent").select("*");
+            const map = {};
+            res.data.forEach(item => { map[item.identifier] = item; });
+            setContent(map);
+        };
+        getContent();
+    }, []);
 useEffect(() => {
   document.fonts.ready.then(() => {
     setFontsReady(true);
@@ -153,16 +165,16 @@ useEffect(() => {
         sparkCount={8}
         duration={400}
       >
-        <main>
-          <div className="origfirst">
             <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
             <Burger menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+        <main>
+          <div className="origfirst">
             <div className="herorogins">
               <div className="originsherotxt">
-                <BlurText text="The" delay={200} animateBy="words" direction="top" className="originsub" />
-                <BlurText text="Origins" delay={300} animateBy="Origins" direction="top" className="originstit" />
-                <BlurText text="Beauty" delay={200} animateBy="words" direction="top" className="originsub" />
-              </div>
+                            <BlurText text={content.origins_hero_the?.text} delay={200} animateBy="words" direction="top" className="originsub" />
+                            <BlurText text={content.origins_hero_title?.text} delay={300} animateBy="Origins" direction="top" className="originstit" />
+                            <BlurText text={content.origins_hero_beauty?.text} delay={200} animateBy="words" direction="top" className="originsub" />
+                        </div>
               <div className="anim">
                 <AnimatedSVG duration={7} />
               </div>
@@ -171,9 +183,9 @@ useEffect(() => {
 
           <div className="section2orig">
             <div className="sec2title">
-              <BlurText text="BEFORE IT WAS BEAUTY " delay={200} animateBy="words" direction="top" className="title1" />
-              <BlurText text="IT WAS A RITUAL" delay={300} animateBy="words" direction="top" className="title2" />
-              <p className='sec2des'>Long before serums, foundations, and formulas, beauty was practiced through nature, belief, and ritual in Ancient Egypt.</p>
+                <BlurText text={content.origins_sec2_title1?.text} delay={200} animateBy="words" direction="top" className="title1" />
+                <BlurText text={content.origins_sec2_title2?.text} delay={300} animateBy="words" direction="top" className="title2" />
+                <p className='sec2des'>{content.origins_sec2_title2?.desc}</p>
             </div>
 
             <div className="origswitch">
@@ -230,44 +242,40 @@ useEffect(() => {
           </div>
 
           <div className="timeline">
-            <div className="timelinecont">
-                <div className="timelinetxt">
-                <h1>The Evolution of Beauty</h1>
-                <div className="line">
-                    <div
-                        className="point"
-                        style={{
-                        position: "absolute",
-                        left:
-                            activeEra === 0 ? "0%" :
-                            activeEra === 1 ? "50%" :
-                            "100%",
-                        transform: "translateX(-50%)",
-                        transition: "left 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
-                        }}
-                    ></div>
-                    <div className="linet"></div>
+                    <div className="timelinecont">
+                        <div className="timelinetxt">
+                            <h1>{content.origins_timeline_title?.text}</h1>
+                            <div className="line">
+                                <div
+                                    className="point"
+                                    style={{
+                                        position: "absolute",
+                                        left: activeEra === 0 ? "0%" : activeEra === 1 ? "50%" : "100%",
+                                        transform: "translateX(-50%)",
+                                        transition: "left 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+                                    }}
+                                ></div>
+                                <div className="linet"></div>
+                            </div>
+                            <div className="dates">
+                                {timelineData.map((era, index) => (
+                                    <h1
+                                        key={era.date}
+                                        className={index !== activeEra ? "inactivedate" : ""}
+                                        onClick={() => handleEraChange(index)}
+                                        style={{ cursor: "pointer" }}
+                                    >
+                                        {era.date}
+                                    </h1>
+                                ))}
+                            </div>
+                        </div>
+                        <div className={`timelineimg ${eraFading ? "fade-out" : "fade-in"}`}>
+                            <img src={timelineData[activeEra].image} alt={timelineData[activeEra].date} />
+                            <p>{timelineData[activeEra].description}</p>
+                        </div>
                     </div>
-                <div className="dates">
-                    {timelineData.map((era, index) => (
-                    <h1
-                        key={era.date}
-                        className={index !== activeEra ? "inactivedate" : ""}
-                        onClick={() => handleEraChange(index)}
-                        style={{ cursor: "pointer" }}
-                    >
-                        {era.date}
-                    </h1>
-                    ))}
                 </div>
-                </div>
-
-                <div className={`timelineimg ${eraFading ? "fade-out" : "fade-in"}`}>
-                <img src={timelineData[activeEra].image} alt={timelineData[activeEra].date} />
-                <p>{timelineData[activeEra].description}</p>
-                </div>
-            </div>
-            </div>
 
         <div className="textcont">
                     {fontsReady && (

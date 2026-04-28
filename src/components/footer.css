@@ -99,3 +99,13 @@ font-style: normal;
 font-weight: 400;
 line-height: 24px; /* 150% */
 }
+
+@media (min-width: 600px) and (max-width: 1024px){
+    .footerimg {
+   
+    height: auto;
+}
+.col1 {
+    width: 28%;
+}
+}

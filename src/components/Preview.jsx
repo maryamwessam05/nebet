@@ -27,8 +27,7 @@ const Preview = () => {
         alignItems: "center",
         backgroundColor: "transparent",
         overflow: "visible",
-        position: "absolute",
-        top: "21%"
+        position: "absolute"
       }}
     >
       <motion.div

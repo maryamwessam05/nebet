@@ -105,3 +105,11 @@ leading-trim: both;
 
 text-edge: cap;
 }
+
+@media (min-width: 600px) and (max-width: 1024px){
+  .primarybtnnoimg , .primarybtn{
+    scale: 0.8;
+  }
+
+
+}

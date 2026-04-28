@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef , useEffect } from 'react';
 import "./home.css";
 import Navbar from '../components/navbar';
 import { Link } from 'react-router-dom';
@@ -6,9 +6,9 @@ import Burger from '../components/burgermenu';
 import Primarybtn from '../components/primarybtn';
 import UnicornScene from "unicornstudio-react";
 import ticket from "../assets/ticket.svg";
-import hier2 from "../assets/hiero02.png";
-import hier3 from "../assets/hiero03.png";
-import hier4 from "../assets/hiero04.png";
+import hier2 from "../assets/hier.svg";
+import hier3 from "../assets/hier.svg";
+import hier4 from "../assets/hier.svg";
 import ScrollReveal from "../componentsec2txt/ScrollReveal";
 import ImageTrail from '../componentimagehover/ImageTrail';
 import img1 from "../assets/img01.png";
@@ -41,29 +41,98 @@ import plus from "../assets/plus.svg";
 import arrow from "../assets/arrow.svg"
 import Footer from '../components/footer';
 import ClickSpark from '../cursor/ClickSpark';
+import { supabase } from "../supabase";
+import formbg from "../assets/bookingbg.svg"
+import sec5 from "../assets/lorus.svg"
+import formbgb from "../assets/formbgblack.svg"
+import Preloader from './preloader';
+import verlogo from "../assets/verlogo.svg"
+import close from "../assets/x.svg"
+
 
 const Home = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const originsRef = useRef(null);
     const [num, setNum] = useState(0);
-    
-    const { scrollYProgress } = useScroll({
-        target: originsRef,
-        offset: ["start start", "end end"],
-    });
-    const ITEM_WIDTH = 320;
-    const GAP = 45;
-    const ITEMS_COUNT = 3;
-    const PADDING_LEFT = 50;
-    const totalDistance = (ITEMS_COUNT - 1) * (ITEM_WIDTH + GAP) - PADDING_LEFT;
-    const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance]);
-    const items = [prod1, prod2, prod3, prod4, prod5, prod6];
+        const [content, setContent] = useState([]);
+        const [ritual, setRitual] = useState([]);
+    const [visible, setVisible] = useState(true);
+    const [popupVisible, setPopupVisible] = useState(false);
+const preloaderRef = useRef(null);
+
+    useEffect(() => {
+            const getContent = async () => {
+                const res = await supabase.from("webcontent").select("*");
+                const map = {};
+                res.data.forEach(item => { map[item.identifier] = item; });
+                setContent(map);
+            };
+            getContent();
+
+            const getRituals = async() => {
+                        const res = await supabase.from("ritual").select("*");
+                        console.log(res.data);
+                        setRitual(res.data);
+
+                    }
+                    getRituals();
+        }, []);
+
+    const getResponsiveValues = () => {
+  if (typeof window === "undefined") return { itemWidth: 270, itemsCount: 4 };
+  const w = window.innerWidth;
+  if (w >= 600 && w <= 1024) return { itemWidth: 200, itemsCount: 4 };
+  if (w < 600) return { itemWidth: 150, itemsCount: 1 };
+  return { itemWidth: 270, itemsCount: 4 };
+};
+
+const [{ itemWidth, itemsCount }, setResponsive] = useState(getResponsiveValues);
+
+useEffect(() => {
+  const handleResize = () => setResponsive(getResponsiveValues());
+
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
+
+const GAP = 70;
+const PADDING_LEFT = 50;
+const totalDistance = (itemsCount - 1) * (itemWidth + GAP) - PADDING_LEFT;
+
+const { scrollYProgress } = useScroll({
+  target: originsRef,
+  offset: ["start start", "end end"],
+});
+
+const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance]);
+
+
 
     const increment = () => setNum(num + 1);
     const decrement = () => setNum(num - 1);
 
+    
+   useEffect(() => {
+    const timer = setTimeout(() => {
+        preloaderRef.current.style.transition = "transform 0.8s cubic-bezier(0.76, 0, 0.24, 1)";
+        preloaderRef.current.style.transform = "translateY(-100%)";
+
+        setTimeout(() => {
+            setVisible(false);
+            setPopupVisible(true); // ← show popup after preloader exits
+        }, 800);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+}, []);
+
     return (
         <>
+        {visible && (
+            <div ref={preloaderRef} style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 9999 }}>
+                <Preloader />
+            </div>
+        )}
         <ClickSpark
         sparkColor="#ffffff"
         sparkSize={10}
@@ -71,10 +140,34 @@ const Home = () => {
         sparkCount={8}
         duration={400}
         >
-            <main>
-                <div className="first">
                     <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
                     <Burger menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+            <main>
+                {popupVisible && (
+                <div className="popupad">
+                    <div className="popcont">
+                        
+                        <div className="poplogo">
+                            <img src={verlogo} alt="" />
+                            <h4>THE EXHIBIT</h4>
+                        </div>
+                        <h1>ON 13.11.2026</h1>
+                        <div className="btns">
+                            <Link to="/experience">
+                                <Primarybtn style="primarybtn" text="Book Tickets" icon={ticket} />
+                            </Link>
+                            <button 
+                            className="popclose" 
+                            onClick={() => setPopupVisible(false)}
+                            aria-label="Close"
+                        >
+                            <img src={close} alt="" />
+                        </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+                <div className="first">
 
                     <div className="hero">
                         <div className="frame">
@@ -84,7 +177,6 @@ const Home = () => {
                                 <img src={hier3} alt="" />
                                 <img src={hier4} alt="" />
                                 <img src={hier2} alt="" />
-                                {/* duplicated for seamless loop */}
                                 <img src={hier4} alt="" />
                                 <img src={hier2} alt="" />
                                 <img src={hier3} alt="" />
@@ -154,37 +246,33 @@ const Home = () => {
                 </div>
 
                 <div className="section3">
-                    <div className="categ">
-                                    <h1>Makeup Rituals</h1>
-                                    <button>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="43" height="25" viewBox="0 0 43 25" fill="none">
-                                            <path
-                                                d="M28.6667 0C28.6667 1.325 29.98 3.30357 31.3094 4.96429C33.0186 7.10714 35.0611 8.97679 37.4028 10.4036C39.1587 11.4732 41.2872 12.5 43 12.5M43 12.5C41.2872 12.5 39.1569 13.5268 37.4028 14.5964C35.0611 16.025 33.0186 17.8946 31.3094 20.0339C29.98 21.6964 28.6667 23.6786 28.6667 25M43 12.5H9.53674e-07"
-                                                stroke={"#F0E1CE"}
-                                                strokeWidth="2.58333"
-                                            />
-                                        </svg>
-                                    </button>
-                                </div>
-                    <div className="categs">
-                                    <h1>Skincare Rituals</h1>
-                                    <button className="blackarrow">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="43" height="25" viewBox="0 0 43 25" fill="none">
-                                            <path
-                                                d="M28.6667 0C28.6667 1.325 29.98 3.30357 31.3094 4.96429C33.0186 7.10714 35.0611 8.97679 37.4028 10.4036C39.1587 11.4732 41.2872 12.5 43 12.5M43 12.5C41.2872 12.5 39.1569 13.5268 37.4028 14.5964C35.0611 16.025 33.0186 17.8946 31.3094 20.0339C29.98 21.6964 28.6667 23.6786 28.6667 25M43 12.5H9.53674e-07"
-                                                stroke={"#1E1E1E"}
-                                                strokeWidth="2.58333"
-                                            />
-                                        </svg>
-                                    </button>
-                                </div>
+    {ritual.map((item, index) => (
+                    
+                     <div
+                        className={index % 2 === 0 ? "categ" : "categs"}
+                        key={item.name}
+                        style={{ backgroundImage: item.image ? `url(${item.image})` : 'none' }}
+                    >
+                    <h1>{item.name}</h1>
+                    <Link to={"/rituals"}>
+                        <button className={index % 2 === 0 ? "beigearrow" : "blackarrow"}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="43" height="25" viewBox="0 0 43 25" fill="none">
+                            <path
+                            d="M28.6667 0C28.6667 1.325 29.98 3.30357 31.3094 4.96429C33.0186 7.10714 35.0611 8.97679 37.4028 10.4036C39.1587 11.4732 41.2872 12.5 43 12.5M43 12.5C41.2872 12.5 39.1569 13.5268 37.4028 14.5964C35.0611 16.025 33.0186 17.8946 31.3094 20.0339C29.98 21.6964 28.6667 23.6786 28.6667 25M43 12.5H9.53674e-07"
+                            stroke={index % 2 === 0 ? "#F0E1CE" : "#1E1E1E"}
+                            strokeWidth="2.58333"
+                            />
+                        </svg>
+                        </button>
+                    </Link>
+                    </div>
+                ))}
                 </div>
 
                 <div className="section4">
                     <Title
-                        text="Origins of Beauty"
-                        description="What we recognize today as beauty products are the result of centuries of refinement. Their origins, however, lie in the rituals of Ancient Egypt — where every element served both purpose and meaning."
-                    />
+                       text={content.home_origins_title?.text}
+                        description={content.home_origins_title?.desc} />                     
 
                     <div ref={originsRef} className="origins-scroll-container">
                         <div className="origins-sticky-wrapper">
@@ -200,11 +288,10 @@ const Home = () => {
                 </div>
                 
                 <div className="section5">
-                    <Title text="Products" />
+                <Title text={content.home_products_title?.text} />
+                    
                     <div className="sec5cont">
-                    <video autoPlay muted loop playsInline className="bg-video">
-                        <source src={bgvid} type="video/mp4" />
-                    </video>
+                
                         <div className="rotat">
                             <h1>Egyptians Made</h1>
                             <RotatingText
@@ -224,7 +311,7 @@ const Home = () => {
                             />
 
                         </div>
-                        <div style={{ height: '600px', position: 'relative' }}>
+                        <div className='flyincont'>
                         <FlyingPosters
                             items={[prod1, prod2, prod3, prod4, prod5, prod6]}
                             planeWidth={320}
@@ -235,69 +322,81 @@ const Home = () => {
                             cameraZ={20}
                         />
                         </div>
-                        <img className="lotus" src={lotus} alt="" />
+                        
 
                     </div>
+                        <img className='lotus' src={sec5} alt="" />
                 </div>
 
                 <div className="section6">
-                    <Title text="Experience the Ritual" />
+                    <Title text={content.home_experience_title?.text} />
+                   
                     <div className="sec6cont">
-                        <form action="">
-                            <div className="row1">
-                                <div className="group">
-                                    <label htmlFor="">First Name</label>
-                                    <input type="text" />
-                                </div>
-                                <div className="group">
-                                    <label htmlFor="">Last Name</label>
-                                    <input type="text" />
-                                </div>
-
-                            </div>
-                            <div className="row1">
-                                <div className="group">
-                                    <label htmlFor="">Email</label>
-                                    <input type="text" />
-                                </div>
-                                <div className="group">
-                                    <label htmlFor="">Number of tickets</label>
-                                    <div className="tick">
-                                    <button type="button" onClick={decrement}><img src={minus} alt="" /></button>
-                                    <h1>{num}</h1>
-                                    <button type="button" onClick={increment}><img src={plus} alt="" /></button>
+                        <img src={formbgb} alt="" />
+                        <div className="sec6form">
+                        <svg class="formbg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1171 571" fill="none" preserveAspectRatio="none">
+                        <path d="M1170 1V225.104C1141.07 225.718 1118 252.917 1118 286.077C1118 319.237 1141.07 346.435 1170 347.049V570H1V347.049C29.9336 346.435 52.9998 319.237 53 286.077C53 252.917 29.9337 225.718 1 225.104V1H1170ZM1072.4 286.028C1072.4 316.403 1093.49 341.343 1120 341.956V546H50V341.956C76.5055 341.343 97.6035 316.403 97.6035 286.028C97.6035 255.653 76.5055 230.713 50 230.1V25H1120V230.1C1093.49 230.713 1072.4 255.653 1072.4 286.028ZM1074.4 286.028C1074.4 256.098 1095.39 232.087 1121 232.087H1122V23H48V232.087H49C74.6088 232.087 95.6035 256.098 95.6035 286.028C95.6035 315.959 74.6088 339.97 49 339.97H48V548H1122V339.97H1121C1095.39 339.97 1074.4 315.959 1074.4 286.028Z" fill="#F0E1CE" stroke="#1E1E1E" stroke-width="2"/>
+                        </svg>
+                            <form action="">
+                                <div className="row1">
+                                    <div className="group">
+                                        <label htmlFor="">First Name</label>
+                                        <input type="text" />
                                     </div>
-                                    
+                                    <div className="group">
+                                        <label htmlFor="">Last Name</label>
+                                        <input type="text" />
+                                    </div>
+
                                 </div>
+                                <div className="row1">
+                                    <div className="group">
+                                        <label htmlFor="">Email</label>
+                                        <input type="text" />
+                                    </div>
+                                    <div className="group">
+                                        <label htmlFor="">Number of tickets</label>
+                                        <div className="tick">
+                                        <button className='tickbtn' type="button" onClick={decrement}><img src={minus} alt="" /></button>
+                                        <h1>{num}</h1>
+                                        <button className='tickbtn' type="button" onClick={increment}><img src={plus} alt="" /></button>
+                                        </div>
+                                        
+                                    </div>
+
+                                </div>
+                                <div className="row1">
+                                    <div className="group">
+                                        <label htmlFor="">Date</label>
+                                        <input type="date" />
+                                    </div>
+                                    <div className="group">
+                                    <label htmlFor="time-slot">Date</label>
+                                    <div className="select-wrapper">
+                                        <select id="time-slot">
+                                        <option value="">Select a time</option>
+                                        <option value="9-11am">9 - 11 AM</option>
+                                        <option value="1-3pm">1 - 3 PM</option>
+                                        <option value="4-6pm">4 - 6 PM</option>
+                                        </select>
+                                    </div>
+                                    </div>
+
+                                </div>
+                                <div className="signup">
+                                <div className="circbutton"></div>
+                                    <h4>{content.home_signup_label?.text}</h4>
 
                             </div>
-                            <div className="row1">
-                                <div className="group">
-                                    <label htmlFor="">Date</label>
-                                    <input type="date" />
-                                </div>
-                                <div className="group">
-                                <label htmlFor="time-slot">Date</label>
-                                <div className="select-wrapper">
-                                    <select id="time-slot">
-                                    <option value="">Select a time</option>
-                                    <option value="9-11am">9 - 11 AM</option>
-                                    <option value="1-3pm">1 - 3 PM</option>
-                                    <option value="4-6pm">4 - 6 PM</option>
-                                    </select>
-                                </div>
-                                </div>
+                            <div className="formbtn">
+                                <Primarybtn style="primarybtn" icon={ticket} text="Book Tickets" />
 
                             </div>
-                            <div className="signup">
-                            <div className="circbutton"></div>
-                            <h4>Sign up for news and updates</h4>
-                        </div>
-                        <div className="formbtn">
-                            <Primarybtn style="primarybtn" icon={ticket} text="Book Tickets" />
+                            </form>
 
                         </div>
-                        </form>
+                        <img  src={formbgb} alt="" />
+
                         
 
 
