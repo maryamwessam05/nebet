@@ -138,3 +138,44 @@ margin-top: -100px;
 justify-content: space-between;
 align-items: flex-end;
 }
+
+@media (min-width: 600px) and (max-width: 1024px){
+
+    .cardsel{
+        scale: 0.7;
+    }
+    .ingred-sticky-wrapper{
+        height: 85vh;
+    }
+    .kohlprod
+    {
+        width: 265px;
+    }
+    .content1 p{
+        font-size: 26px;
+        width: 40%;
+    }
+    .since h1{
+        font-size: 60px;
+    }
+}
+
+@media (min-width: 300px) and (max-width: 600px){
+    .cardsel{
+        scale: 0.5;
+    }
+    .ingred-sticky-wrapper{
+        height: 79vh;
+    }
+    .dark, .light{
+        width: 245px !important;
+    }
+    .content1{
+        flex-direction: column;
+        margin-top: 0;
+        align-items: center;
+    }
+    .content1 p{
+        width: 100%;
+    }
+}

@@ -31,6 +31,8 @@ const Ingredients = () => {
             const [product, setProduct] = useState([ ]); 
             const [content, setContent] = useState({});
             const preloaderRef = useRef(null);
+            const [isMobile, setIsMobile] = useState(false);
+
 const [visible, setVisible] = useState(true);
 
             
@@ -57,10 +59,16 @@ const [visible, setVisible] = useState(true);
         target: originsRef,
         offset: ["start start", "end end"],
     });
-    const ITEM_WIDTH = 270;
-const GAP = 45;
-const PADDING_LEFT = 50;
-const ITEMS_COUNT = 8;
+    useEffect(() => {
+  const check = () => setIsMobile(window.innerWidth <= 600);
+  check();
+  window.addEventListener("resize", check);
+  return () => window.removeEventListener("resize", check);
+}, []);
+const ITEM_WIDTH = isMobile ? 245 : 270;
+const GAP = isMobile ? 20 : 45;
+const PADDING_LEFT = isMobile ? 20 : 50;
+const ITEMS_COUNT = isMobile ? 11 : 8;
 const totalDistance = (ITEMS_COUNT - 1) * (ITEM_WIDTH + GAP) - PADDING_LEFT;
 const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance]);
 
