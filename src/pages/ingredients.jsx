@@ -20,6 +20,7 @@ import kohlprod from "../assets/kohlprod.png"
 import Ingred from '../components/ingred';
 import ScrollVelocity from '../rollingtext/ScrollVelocity';
 import {supabase} from "../supabase"
+import Preloader from './preloader';
 
 
 
@@ -29,6 +30,9 @@ const Ingredients = () => {
             const [menuOpen, setMenuOpen] = useState(false);
             const [product, setProduct] = useState([ ]); 
             const [content, setContent] = useState({});
+            const preloaderRef = useRef(null);
+const [visible, setVisible] = useState(true);
+
             
     useEffect(()=> {
         const getProducts = async() => {
@@ -59,8 +63,27 @@ const PADDING_LEFT = 50;
 const ITEMS_COUNT = 8;
 const totalDistance = (ITEMS_COUNT - 1) * (ITEM_WIDTH + GAP) - PADDING_LEFT;
 const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+        preloaderRef.current.style.transition = "transform 0.8s cubic-bezier(0.76, 0, 0.24, 1)";
+        preloaderRef.current.style.transform = "translateY(-100%)";
+
+        setTimeout(() => {
+            setVisible(false);
+        }, 800);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+}, []);
+
     return ( 
         <>
+        {visible && (
+            <div ref={preloaderRef} style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 9999 }}>
+                <Preloader />
+            </div>
+        )}
           <ClickSpark
         sparkColor="#ffffff"
         sparkSize={10}

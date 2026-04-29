@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef , useEffect } from 'react';
 import Navbar from '../components/navbar';
 import { Link } from 'react-router-dom';
 import Burger from '../components/burgermenu';
@@ -27,6 +27,8 @@ import prodcard6 from "../assets/prod06card.png"
 import build from "../assets/build.png"
 import Step from '../components/step';
 import { supabase } from "../supabase";
+import Preloader from './preloader';
+
 
 
 const Rituals = () => {
@@ -34,6 +36,9 @@ const Rituals = () => {
     const [menuOpen, setMenuOpen] = useState(false);
 const [openSteps, setOpenSteps] = useState(new Set());
     const [content, setContent] = useState({});
+    const preloaderRef = useRef(null);
+    const [visible, setVisible] = useState(true);
+      ;
 
      useEffect(() => {
             const getContent = async () => {
@@ -62,8 +67,27 @@ const [openSteps, setOpenSteps] = useState(new Set());
     setOpenSteps(prev => new Set([...prev, step]));
 };
 
+useEffect(() => {
+    const timer = setTimeout(() => {
+        preloaderRef.current.style.transition = "transform 0.8s cubic-bezier(0.76, 0, 0.24, 1)";
+        preloaderRef.current.style.transform = "translateY(-100%)";
+
+        setTimeout(() => {
+            setVisible(false);
+        }, 800);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+}, []);
+
+
     return ( 
         <>
+        {visible && (
+            <div ref={preloaderRef} style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 9999 }}>
+                <Preloader />
+            </div>
+        )}
          <ClickSpark
         sparkColor="#ffffff"
         sparkSize={10}

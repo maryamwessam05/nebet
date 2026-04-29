@@ -793,12 +793,12 @@ line-height: normal;
     width: 30%;
 }
 .heroimage2 {
-    scale: 0.5;
+    scale: 0.6;
     position: relative;
     top: -63px;
 }
 .herobtn2{
-    bottom: 6px;
+    bottom: 10px;
 }
 .categ h1 , .categs h1{
     font-size: 75px;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState , useRef } from 'react';
 import { Link } from 'react-router-dom';
 import Burger from '../components/burgermenu';
 import Primarybtn from '../components/primarybtn';
@@ -19,7 +19,7 @@ import plus from "../assets/plus.svg";
 import arrow from "../assets/arrow.svg"
 import ticket from "../assets/ticket.svg";
 import { supabase } from "../supabase";
-
+import Preloader from './preloader';
 
 
 
@@ -28,6 +28,9 @@ const Experience = () => {
                 const [menuOpen, setMenuOpen] = useState(false);
                     const [num, setNum] = useState(0);
                     const [content, setContent] = useState({});
+                    const preloaderRef = useRef(null);
+const [visible, setVisible] = useState(true);
+
                     
  useEffect(() => {
         const getContent = async () => {
@@ -40,8 +43,27 @@ const Experience = () => {
     }, []);
         const increment = () => setNum(num + 1);
     const decrement = () => setNum(num - 1);
+
+      useEffect(() => {
+    const timer = setTimeout(() => {
+        preloaderRef.current.style.transition = "transform 0.8s cubic-bezier(0.76, 0, 0.24, 1)";
+        preloaderRef.current.style.transform = "translateY(-100%)";
+
+        setTimeout(() => {
+            setVisible(false);
+        }, 800);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+}, []);
+
     return ( 
         <>
+        {visible && (
+            <div ref={preloaderRef} style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 9999 }}>
+                <Preloader />
+            </div>
+        )}
            <ClickSpark
         sparkColor="#ffffff"
         sparkSize={10}

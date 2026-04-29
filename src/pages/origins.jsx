@@ -24,6 +24,7 @@ import old2 from "../assets/era02.png"
 import old3 from "../assets/era03.png"
 import ScrollReveal from "../componentsec2txt/ScrollReveal";
 import { supabase } from "../supabase";
+import Preloader from './preloader';
 
 
 
@@ -113,6 +114,9 @@ const [activeEra, setActiveEra] = useState(0);
 const [eraFading, setEraFading] = useState(false);
 const [fontsReady, setFontsReady] = useState(false);
     const [content, setContent] = useState({});
+     const preloaderRef = useRef(null);
+     const [visible, setVisible] = useState(true);
+
 
  useEffect(() => {
         const getContent = async () => {
@@ -136,7 +140,7 @@ useEffect(() => {
   setImgFading(true);
   
   setTimeout(() => {
-    setShowOrigin(prev => !prev);  // only toggle ONCE at the midpoint
+    setShowOrigin(prev => !prev);  
     setCardFading(false);    
     setImgFading(false);
   }, 400);
@@ -155,9 +159,28 @@ useEffect(() => {
   }, 350);
 };
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+        preloaderRef.current.style.transition = "transform 0.8s cubic-bezier(0.76, 0, 0.24, 1)";
+        preloaderRef.current.style.transform = "translateY(-100%)";
+
+        setTimeout(() => {
+            setVisible(false);
+        }, 800);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+}, []);
+
+
   
   return (
     <>
+    {visible && (
+            <div ref={preloaderRef} style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 9999 }}>
+                <Preloader />
+            </div>
+        )}
       <ClickSpark
         sparkColor="#ffffff"
         sparkSize={10}

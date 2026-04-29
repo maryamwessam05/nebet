@@ -88,4 +88,7 @@ border: 1.373px solid #F0E1CE;
     .menu-btn{
       scale: 0.7;
     }
+    .nav{
+      padding: 15px;
+    }
 }

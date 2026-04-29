@@ -446,4 +446,8 @@ line-height: 75%; /* 21.052px */
 }
 
 @media (min-width: 600px) and (max-width: 1024px){
+    .ritherotxt{
+        font-size: 95px;
+
+    }
 }
