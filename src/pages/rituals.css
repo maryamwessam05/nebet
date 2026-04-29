@@ -444,10 +444,100 @@ line-height: 75%; /* 21.052px */
 .buildtxt img{
     height: 60%;
 }
+.ritheroimg{
+    width: 100%;
+    height: 72vh;
+}
 
 @media (min-width: 600px) and (max-width: 1024px){
-    .ritherotxt{
+    .ritherotxt h1{
         font-size: 95px;
 
+    }
+
+    .ritheroimg{
+        height: 56vh;
+    }
+    .categsr h1 , .categr h1{
+        text-align: left;
+        font-size: 80px;
+        line-height: 85%;
+    }
+    .categsr p , .categr p{
+        font-size: 26px;
+    }
+    .productsused{
+        gap: 65px;
+    }
+    .prod1 , .prod2 , .prod3{
+        width: 210px;
+    }
+    .section3r{
+        gap: 45px;
+    }
+    .build{
+        padding: 20px;
+    }
+    .buildtxt img {
+    width: 100%;
+    height: auto;
+}
+
+}
+
+@media (min-width: 300px) and (max-width: 600px){
+    .ritherotxt h1{
+        font-size: 75px;
+    }
+    .ritherotxt p{
+        font-size: 20px;
+    }
+    .ritheroimg{
+        height: 42vh;
+    }
+    .ritcat{
+        flex-direction: column;
+    }
+    .categsr , .categr{
+        margin: 0;
+        padding: 25px 15px;
+    }
+    .categr h1 , .categsr h1 {
+    text-align: left;
+ 
+    font-size: 73px;
+    
+    line-height: 91%;
+    letter-spacing: -5.3px;
+}
+
+.productsused {
+    display: flex;
+    align-items: center;
+    gap: 61px;
+    flex-direction: column;
+}
+.prod1 , .prod2 , .prod3{
+    width: 266px;
+}
+.prodimgc {
+    width: 36vw;}
+
+    .build{
+        padding-left: 15px;
+        flex-direction: column;
+        height: auto;
+        gap: 40px;
+    }
+    .buildtxt{
+        width: 100%;
+        align-items: center;
+    }
+    .buildsteps{
+        width: 100%;
+        flex-direction: column;
+    }
+    .buildtxt img{
+        display: none;
     }
 }

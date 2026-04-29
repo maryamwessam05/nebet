@@ -1049,16 +1049,5 @@ select , input[type = "date"]{
 .section6{
     padding: 0;
 }
-.footerimg {
-    width: 90%;
-    height: auto;
-}
-.footerow{
-    flex-direction: column;
-        gap: 55px;
-}
 
-.footerow .col1 {
-    width: 100%;
-}
 }

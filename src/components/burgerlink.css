@@ -142,7 +142,7 @@ background: rgba(240, 225, 206, 0.19);
 .burgerlink{
     padding: 30px 18px 30px 18px;
 }
-.burgerlink h1{
+.burgerlink h1 , .burgerlink.active h1{
     font-size: 35px;
 }
 .burgerbtn.active , .burgerbtn{

@@ -106,3 +106,9 @@ font-family: "GC Begia Demo";
   background-size: cover;
   background-position: 50% 50%;
 }
+
+@media (min-width: 300px) and (max-width: 600px){
+  .menu__item-link{
+    font-size: 3vh;
+  }
+}

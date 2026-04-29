@@ -109,3 +109,29 @@ line-height: 24px; /* 150% */
     width: 28%;
 }
 }
+
+@media (min-width: 300px) and (max-width: 600px){
+    .footerimg {
+    width: 90%;
+    height: auto;
+}
+.footerow{
+    flex-direction: column;
+        gap: 55px;
+}
+
+.footerow .col1 {
+    width: 100%;
+}.footerimg {
+    width: 90%;
+    height: auto;
+}
+.footerow{
+    flex-direction: column;
+        gap: 55px;
+}
+
+.footerow .col1 {
+    width: 100%;
+}
+}
