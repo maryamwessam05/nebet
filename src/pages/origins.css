@@ -355,3 +355,77 @@ line-height: 84.086%; /* 26.218px */
   transition: opacity 0.35s ease;
 }
 
+@media (min-width: 600px) and (max-width: 1024px){
+    .originstit{
+        font-size: 145px;
+    }
+    .originsub{
+        font-size: 50px;
+    }
+    .herorogins{
+        height: 327.842px;
+    }
+    .title1 , .title2{
+        font-size: 41px;
+    }
+    .section2orig{
+        gap: 50px;
+    }
+    .dates h1{
+        font-size: 65px;
+    }
+    .timeline{
+        height: 590px;
+    }
+    .timelineimg p{
+        font-size: 26px;
+    }
+}
+
+@media (min-width: 300px) and (max-width: 600px){
+    .originstit{
+        font-size: 100px;
+    }
+    .herorogins{
+        height: 280px;
+    }
+    .anim {
+    left: -155px;
+    width: 151%;
+    
+}
+.title1 , .title2{
+        font-size: 35px;
+    }
+.sec2des{
+    font-size: 24px;
+}
+.origswcont {
+    flex-direction: column !important;
+  }
+  .changcard , .changimg{
+    width: 100%;
+  }
+  .origswcont{
+    height: auto;
+  }
+  .lot1 , .lot2{
+    width: 35vw;
+  }
+  .section2orig{
+    gap: 40px;
+  }
+  .dates h1{
+    font-size: 40px !important;
+    letter-spacing: -2.779px;
+  }
+  .timelinecont h1{
+    font-size:36px;
+  }
+  .timelineimg p{
+    font-size: 20px;
+  }
+  .timeline{
+    height: 470px;
+  }
+}
