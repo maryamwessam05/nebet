@@ -17,6 +17,7 @@ align-self: stretch;
     display: flex;
 align-items: flex-start;
 gap: 60px;
+justify-content: center;
 }
 
 .beige{
@@ -127,4 +128,101 @@ width: 78%;
 flex-direction: column;
 align-items: flex-start;
 gap: 39px;
+}
+
+
+@media (min-width: 600px) and (max-width: 1024px){
+.exhertxt{
+    top: 136px;
+    position: relative;
+}
+.whatto{
+    margin-top: 300px;
+}
+.exptxt {
+    padding: 25px 0 25px 25px !important;
+}
+.exptxtl {
+    padding: 25px 25px 25px 0 !important;
+}
+.exdark img{
+    width: 42vw !important;
+}
+ .exlight img{
+    width: 42vw !important;
+}
+.exptxt h4 , .exptxtl h4{
+    font-size: 33px !important;
+}
+.exptxt p , .exptxtl p{
+        font-size: 18.825px !important;;
+    width: 75% !important;
+
+}
+.exdark , .exlight{
+    height: 140px !important;
+}
+.eventcard {
+    gap: 30px;
+}
+.beige h3 , .greycard h3{
+    font-size: 35px;
+}
+.beige p {
+    font-size: 20px;
+}
+.detpair p{
+    font-size: 26px;
+}
+.beige , .greycard{
+    height: 450px !important;
+}
+
+}
+@media (min-width: 300px) and (max-width: 600px){
+    .exhertxt{
+        position: relative;
+        top: 100px;
+    }
+    .whatto{
+        gap: 50px;
+    }
+    .exptxt{
+        padding: 20px !important;
+                align-items: center !important;
+
+
+    }
+    .exptxtl{
+        padding: 20px !important;
+        align-items: center !important;
+    }
+    .exdark , .exlight{
+        flex-direction: column !important;
+        height: auto !important;
+    }
+    .exptxtl h4 , .exptxt h4{
+        font-size: 35px !important;
+        text-align: center !important;
+    }
+    .exptxtl p , .exptxt p{
+        font-size: 22px !important;
+        text-align: center !important;
+    }
+    .eventcard{
+        flex-direction: column;
+    }
+    .beige , .greycard{
+        width: 100% !important;
+        height: 345px !important;
+    }
+    .gretxt{
+        gap: 25px;
+    }
+    .detpair h6{
+        font-size: 21px;
+    }
+    .detpair p{
+        font-size: 25px;
+    }
 }

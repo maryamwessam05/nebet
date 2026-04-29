@@ -55,6 +55,8 @@ const Home = () => {
     const originsRef = useRef(null);
     const [num, setNum] = useState(0);
         const [content, setContent] = useState([]);
+        const [origins, setOrigins] = useState([]);
+
         const [ritual, setRitual] = useState([]);
     const [visible, setVisible] = useState(true);
     const [popupVisible, setPopupVisible] = useState(false);
@@ -62,12 +64,17 @@ const preloaderRef = useRef(null);
 
     useEffect(() => {
             const getContent = async () => {
-                const res = await supabase.from("webcontent").select("*");
-                const map = {};
-                res.data.forEach(item => { map[item.identifier] = item; });
-                setContent(map);
-            };
-            getContent();
+            const res = await supabase.from("webcontent").select("*");
+            const map = {};
+            res.data.forEach(item => { map[item.identifier] = item; });
+            setContent(map);
+
+            const originsRes = await supabase
+                .from("modern_makeup_origins")  // fix table name (underscore not dot)
+                .select("name, derived_from, description, image_url");
+            
+            if (originsRes.data) setOrigins(originsRes.data);
+        };
 
             const getRituals = async() => {
                         const res = await supabase.from("ritual").select("*");
@@ -119,7 +126,7 @@ const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance]);
 
         setTimeout(() => {
             setVisible(false);
-            setPopupVisible(true); // ← show popup after preloader exits
+            setPopupVisible(true);
         }, 800);
     }, 2000);
 
@@ -277,11 +284,23 @@ const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance]);
                     <div ref={originsRef} className="origins-scroll-container">
                         <div className="origins-sticky-wrapper">
                             <motion.div className="origincont" style={isMobile ? {} : { x }}>
-                                <Origin style="origin"  number="01" image={orig1} title="Eyeliner"    derivedFrom="Kohl (3000 BC)"              description="Used for protection and spiritual defense." />
-                                <Origin style="origin2" number="02" image={orig2} title="Face Mask"   derivedFrom="Milk & Honey Rituals"        description="Used for nourishment and renewal." />
-                                <Origin style="origin"  number="03" image={orig3} title="Serums"      derivedFrom="Natural Oils"                description="Used for healing and protection." />
-                                <Origin style="origin2" number="04" image={orig4} title="Eyeshadow"   derivedFrom="Malachite & Charcoal Pigments" description="Crushed minerals that add color while symbolizing protection." />
-                                <Origin style="origin"  number="05" image={orig5} title="Lip Balm"    derivedFrom="Resin & Wax Treatment"       description="Natural balms used to protect and soften lips in harsh climates." />
+                                <div ref={originsRef} className="origins-scroll-container">
+                                    <div className="origins-sticky-wrapper">
+                                        <motion.div className="origincont" style={isMobile ? {} : { x }}>
+                                            {origins.map((item, index) => (
+                                                <Origin
+                                                    key={item.name}
+                                                    style={index % 2 === 0 ? "origin" : "origin2"}
+                                                    number={String(index + 1).padStart(2, "0")}
+                                                    image={item.image_url}
+                                                    title={item.name}
+                                                    derivedFrom={item.derived_from}
+                                                    description={item.description}
+                                                />
+                                            ))}
+                                        </motion.div>
+                                    </div>
+                                </div>
                             </motion.div>
                         </div>
                     </div>

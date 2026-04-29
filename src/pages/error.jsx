@@ -45,10 +45,10 @@ const [visible, setVisible] = useState(true);
         sparkCount={8}
         duration={400}
         >
-            <main>
-                <div className="first">
                     <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
                     <Burger menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+            <main>
+                <div className="first">
                     
                 </div>
 

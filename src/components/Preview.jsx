@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, stagger, useAnimate } from "motion/react";
 import Floating, { FloatingElement } from "./fancy/image/parallax-floating";
 import { exampleImages } from "../utils/demo-images";
@@ -11,10 +11,26 @@ const imgStyle = {
 
 const Preview = () => {
   const [scope, animate] = useAnimate();
+  const [isMobile, setIsMobile] = useState(false);
+  const [isTablet, setIsTablet] = useState(false);
+
+  useEffect(() => {
+    const check = () => {
+      setIsMobile(window.innerWidth <= 600);
+      setIsTablet(window.innerWidth > 600 && window.innerWidth <= 1024);
+    };
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   useEffect(() => {
     animate("img", { opacity: [0, 1] }, { duration: 0.5, delay: stagger(0.15) });
   }, []);
+
+  // Scale down image sizes for tablet and mobile
+  const scale = isMobile ? 0.5 : isTablet ? 0.7 : 1;
+  const s = (val) => Math.round(val * scale);
 
   return (
     <div
@@ -22,12 +38,12 @@ const Preview = () => {
       style={{
         display: "flex",
         width: "100dvw",
-        height: "58dvh",
+        height: isMobile ? "45dvh" : isTablet ? "52dvh" : "58dvh",
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "transparent",
         overflow: "visible",
-        position: "absolute"
+        position: "absolute",
       }}
     >
       <motion.div
@@ -42,16 +58,15 @@ const Preview = () => {
           alignItems: "center",
           gap: "1rem",
         }}
-      >
-        
-      </motion.div>
+      />
 
-      <Floating sensitivity={-1}>
+      <Floating sensitivity={isMobile ? -0.3 : isTablet ? -0.6 : -1}>
+
         <FloatingElement depth={0.5} style={{ top: "8%", left: "11%" }}>
           <motion.img
             initial={{ opacity: 0 }}
             src={exampleImages[0].url}
-            style={{ ...imgStyle, width: 96, height: 96 }}
+            style={{ ...imgStyle, width: s(96), height: s(96) }}
           />
         </FloatingElement>
 
@@ -59,7 +74,7 @@ const Preview = () => {
           <motion.img
             initial={{ opacity: 0 }}
             src={exampleImages[1].url}
-            style={{ ...imgStyle, width: 112, height: 112 }}
+            style={{ ...imgStyle, width: s(112), height: s(112) }}
           />
         </FloatingElement>
 
@@ -67,39 +82,39 @@ const Preview = () => {
           <motion.img
             initial={{ opacity: 0 }}
             src={exampleImages[2].url}
-            style={{ ...imgStyle, width: 160, height: 208 }}
+            style={{ ...imgStyle, width: s(160), height: s(208) }}
           />
         </FloatingElement>
 
-        <FloatingElement depth={1} style={{ top: "0%", left: "83%" }}>
+        <FloatingElement depth={1} style={{ top: "0%", left: isMobile ? "78%" : "83%" }}>
           <motion.img
             initial={{ opacity: 0 }}
             src={exampleImages[3].url}
-            style={{ ...imgStyle, width: 128, height: 128 }}
+            style={{ ...imgStyle, width: s(128), height: s(128) }}
           />
         </FloatingElement>
 
-        <FloatingElement depth={1} style={{ top: "40%", left: "2%" }}>
+        <FloatingElement depth={1} style={{ top: "40%", left: isMobile ? "0%" : "2%" }}>
           <motion.img
             initial={{ opacity: 0 }}
             src={exampleImages[4].url}
-            style={{ ...imgStyle, width: 144, height: 144 }}
+            style={{ ...imgStyle, width: s(144), height: s(144) }}
           />
         </FloatingElement>
 
-        <FloatingElement depth={2} style={{ top: "70%", left: "77%" }}>
+        <FloatingElement depth={2} style={{ top: "70%", left: isMobile ? "72%" : "77%" }}>
           <motion.img
             initial={{ opacity: 0 }}
             src={exampleImages[7].url}
-            style={{ ...imgStyle, width: 144, height: 192 }}
+            style={{ ...imgStyle, width: s(144), height: s(192) }}
           />
         </FloatingElement>
 
-        <FloatingElement depth={4} style={{ top: "73%", left: "15%" }}>
+        <FloatingElement depth={4} style={{ top: "73%", left: isMobile ? "5%" : "15%" }}>
           <motion.img
             initial={{ opacity: 0 }}
             src={exampleImages[5].url}
-            style={{ ...imgStyle, width: 208, height: "auto" }}
+            style={{ ...imgStyle, width: s(208), height: "auto" }}
           />
         </FloatingElement>
 
@@ -107,9 +122,10 @@ const Preview = () => {
           <motion.img
             initial={{ opacity: 0 }}
             src={exampleImages[6].url}
-            style={{ ...imgStyle, width: 128, height: 128 }}
+            style={{ ...imgStyle, width: s(128), height: s(128) }}
           />
         </FloatingElement>
+
       </Floating>
     </div>
   );
