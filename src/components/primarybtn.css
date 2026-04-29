@@ -111,5 +111,14 @@ text-edge: cap;
     scale: 0.8;
   }
 
+  
+
+}
+
+@media (min-width: 300px) and (max-width: 600px){
+  .primarybtnnoimg , .primarybtn{
+    scale: 0.8;
+  }
+
 
 }

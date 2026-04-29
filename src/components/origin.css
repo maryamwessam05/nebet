@@ -119,3 +119,22 @@ line-height: 75%; /* 27.052px */
 }
 
 }
+
+@media (min-width: 300px) and (max-width: 600px) {
+    .origin , .origin2{
+        width: 180px;
+    }
+    .origin h1, .origin2 h1{
+        font-size: 40px;
+        letter-spacing: -4px;
+    }
+    .origcontimg {
+    width: 100%;
+    height: 176px;
+    overflow: hidden;
+}
+.origin h3, .origin2 h3{
+    font-size: 39px;
+    letter-spacing: -3.306px;
+}
+}

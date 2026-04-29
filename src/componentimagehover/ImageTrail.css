@@ -29,3 +29,10 @@
   top: calc(-1 * 20px / 2);
   left: calc(-1 * 20px / 2);
 }
+
+
+@media (max-width: 1000px) {
+  .content__img {
+    width: 100px;
+  }
+}

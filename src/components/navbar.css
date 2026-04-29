@@ -77,3 +77,15 @@ border: 1.373px solid #F0E1CE;
 
 
 }
+
+@media (min-width: 300px) and (max-width: 600px){
+    .logo{
+        width: 10vw;
+    }
+    .logos{
+        width: 23vw;
+    }
+    .menu-btn{
+      scale: 0.7;
+    }
+}

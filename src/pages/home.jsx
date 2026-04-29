@@ -103,7 +103,7 @@ const { scrollYProgress } = useScroll({
   target: originsRef,
   offset: ["start start", "end end"],
 });
-
+const isMobile = typeof window !== "undefined" && window.innerWidth <= 600;
 const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance]);
 
 
@@ -276,7 +276,7 @@ const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance]);
 
                     <div ref={originsRef} className="origins-scroll-container">
                         <div className="origins-sticky-wrapper">
-                            <motion.div className="origincont" style={{ x }}>
+                            <motion.div className="origincont" style={isMobile ? {} : { x }}>
                                 <Origin style="origin"  number="01" image={orig1} title="Eyeliner"    derivedFrom="Kohl (3000 BC)"              description="Used for protection and spiritual defense." />
                                 <Origin style="origin2" number="02" image={orig2} title="Face Mask"   derivedFrom="Milk & Honey Rituals"        description="Used for nourishment and renewal." />
                                 <Origin style="origin"  number="03" image={orig3} title="Serums"      derivedFrom="Natural Oils"                description="Used for healing and protection." />

@@ -50,3 +50,15 @@ line-height: 75%; /* 21.052px */
     width: 75%;
 }
 }
+
+@media (min-width: 300px) and (max-width: 600px){
+  .title h1{
+    font-size: 46px;
+    letter-spacing: 0;
+  }
+.title p{
+    font-size: 20px;
+    width: 80%;
+}
+
+}

@@ -149,3 +149,25 @@ background: rgba(240, 225, 206, 0.19);
     scale: 0.8;
 }
 }
+
+@media (min-width: 300px) and (max-width: 600px){
+.burgerlink.active{
+    padding: 35px 10px 35px 10px;
+}
+.burgerlink{
+    padding: 35px 10px 35px 10px;
+}
+.burgerlink h1 , .burgerlink.active h1{
+    font-size: 25px;
+    line-height: 25px;
+}
+.burgtxt{
+    align-items: flex-end;
+}
+.burgermenu{
+    width: 75%;
+}
+.burgerbtn , .burgerbtn.active{
+        scale: 0.7;
+}
+}

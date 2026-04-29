@@ -12,7 +12,9 @@ body{
     overflow-x: hidden;
 
 }
-
+a{
+    line-height: 1;
+}
 main{
     width: 100%;
     display: flex;
@@ -95,6 +97,7 @@ position: relative;
     justify-content: center;
     align-items: center;
     padding: 10px;
+    height: 100%;
 border: 1px solid #F0E1CE;
 animation: heroimage 1s ease-out forwards;
 }
@@ -661,9 +664,12 @@ gap: 13.17px;
 
 .circbutton{
     width: 26.34px;
-height: 26.34px;
+    height: 26.34px;
+
 border: #000 solid 1.373px;
 border-radius: 50%;
+  aspect-ratio: 1.1;
+
 }
 
 .signup h4{
@@ -879,5 +885,180 @@ select , input[type = "date"]{
 }
 .section6{
     padding: 0;
+}
+}
+
+@media (min-width: 300px) and (max-width: 600px){
+   
+ .popcont h1{
+    font-size: 37px;
+ }
+ .btns{
+    flex-direction: column;
+ }
+ .hero{
+    flex-direction: column;
+    padding: 0 20px;
+    gap: 10px;
+ }
+ @keyframes heroscale {
+    0%{
+        width: 0%;
+    }
+    100%{
+        width: 100%;
+    }
+}
+
+
+@keyframes heroimage {
+    0%{
+        width: 0%;
+    }
+    100%{
+        width: 100%;
+    }
+}
+
+.heroimage{
+    height: 63%;
+}
+.frame{
+    height: 25%;
+}
+.imageframe img:nth-child(odd), .imageframe img:nth-child(even){
+    width: 10%;
+}
+.heroimage2{
+    scale: 0.5;
+            position: relative;
+        top: -97px;
+}
+.herobtn2{
+    bottom: 9px;
+}
+.herobtn{
+    top: 22px;
+}
+.categ, .categs{
+    height: 120px;
+    padding: 15px;
+}
+.categ h1 , .categs h1{
+    font-size: 50px;
+    letter-spacing: -5px;
+}
+.beigearrow , .blackarrow{
+    scale: 0.7;
+}
+.section4{
+    gap: 40px;
+    padding: 0;
+}
+.origins-sticky-wrapper{
+    padding: 0;
+}
+    .origins-scroll-container {
+        height: auto;
+        position: static;
+    }
+
+    .origins-sticky-wrapper {
+        position: static;
+        height: auto;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;    
+        -ms-overflow-style: none;    
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .origins-sticky-wrapper::-webkit-scrollbar {
+        display: none;               
+    }
+
+    .origincont {
+        flex-wrap: nowrap;
+        width: max-content;
+    }
+    .lotus{
+        display: none;
+    }
+    .sec5cont{
+        flex-direction: column;
+    align-items: center;
+    gap: 65px;
+    }
+    .rotat {
+    width: 100%;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+.rotat h1{
+    font-size: 46px;
+}
+.flyincont{
+    height: 350px;
+}
+.formbg{
+    display: none;
+}
+.sec6form{
+    background-color: #F0E1CE;
+    padding: 32px 0px;
+    height: 100%;
+    width: 90%;
+}
+.sec6form form{
+    gap: 30px;
+    height: 100%;
+}
+.row1{
+    flex-direction: column;
+    gap: 24px;
+}
+.group{
+    width: 100%;
+}
+.group input{
+    height: 35px;
+}
+.sec6cont{
+    height: auto;
+}
+.tick{
+    margin-top: 6px;
+}
+.signup h4{
+    font-size: 14px;
+}
+.circbutton{
+    width: 18px;
+    height: 18px;
+    
+}
+.signup{
+    align-items: center;
+}
+.section6{
+    padding: 0;
+}
+.footerimg {
+    width: 90%;
+    height: auto;
+}
+.footerow{
+    flex-direction: column;
+        gap: 55px;
+}
+
+.footerow .col1 {
+    width: 100%;
 }
 }
