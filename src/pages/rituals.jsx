@@ -31,6 +31,7 @@ import Preloader from './preloader';
 import Title from "../components/title"
 
 
+
 const Rituals = () => {
     const [activeTab, setActiveTab] = useState('eye');
     const [menuOpen, setMenuOpen] = useState(false);
@@ -38,7 +39,8 @@ const [openSteps, setOpenSteps] = useState(new Set());
     const [content, setContent] = useState({});
     const preloaderRef = useRef(null);
     const [visible, setVisible] = useState(true);
-      ;
+            const [ritual, setRitual] = useState([]);
+    
 
      useEffect(() => {
             const getContent = async () => {
@@ -48,6 +50,14 @@ const [openSteps, setOpenSteps] = useState(new Set());
                 setContent(map);
             };
             getContent();
+
+            const getRituals = async() => {
+                        const res = await supabase.from("ritual").select("*");
+                        console.log("ritual data:", ritual);
+                        setRitual(res.data);
+
+                    }
+                    getRituals();
         }, []);
 
 
@@ -65,6 +75,8 @@ const [openSteps, setOpenSteps] = useState(new Set());
     ];
     const handleStepClick = (step) => {
     setOpenSteps(prev => new Set([...prev, step]));
+
+    
 };
 
 useEffect(() => {
@@ -110,32 +122,27 @@ useEffect(() => {
                 </div>
 
                 <div className="ritcat">
-                    <div className="categr">
-                                    <h1>Makeup Rituals</h1>
-                                    <p>Pigments of power, protection, and identity.</p>
-                                    <button className='categrbtn'>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="43" height="25" viewBox="0 0 43 25" fill="none">
-                                            <path
+                    {ritual.map((item, index) => (
+                                        
+                                         <div
+                                            className={index % 2 === 0 ? "categr" : "categsr"}
+                                            key={item.name}
+                                            style={{ backgroundImage: item.image ? `url(${item.image})` : 'none' }}
+                                        >
+                                        <h1>{item.name}</h1>
+                                      
+                                            <button className={index % 2 === 0 ? "beigearrow" : "blackarrowr"}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="43" height="25" viewBox="0 0 43 25" fill="none">
+                                                <path
                                                 d="M28.6667 0C28.6667 1.325 29.98 3.30357 31.3094 4.96429C33.0186 7.10714 35.0611 8.97679 37.4028 10.4036C39.1587 11.4732 41.2872 12.5 43 12.5M43 12.5C41.2872 12.5 39.1569 13.5268 37.4028 14.5964C35.0611 16.025 33.0186 17.8946 31.3094 20.0339C29.98 21.6964 28.6667 23.6786 28.6667 25M43 12.5H9.53674e-07"
-                                                stroke={"#F0E1CE"}
+                                                stroke={index % 2 === 0 ? "#F0E1CE" : "#1E1E1E"}
                                                 strokeWidth="2.58333"
-                                            />
-                                        </svg>
-                                    </button>
-                                </div>
-                    <div className="categsr">
-                                    <h1>Skincare Rituals</h1>
-                                    <p>Routines rooted in nature, healing, and renewal.</p>
-                                    <button className="blackarrowr">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="43" height="25" viewBox="0 0 43 25" fill="none">
-                                            <path
-                                                d="M28.6667 0C28.6667 1.325 29.98 3.30357 31.3094 4.96429C33.0186 7.10714 35.0611 8.97679 37.4028 10.4036C39.1587 11.4732 41.2872 12.5 43 12.5M43 12.5C41.2872 12.5 39.1569 13.5268 37.4028 14.5964C35.0611 16.025 33.0186 17.8946 31.3094 20.0339C29.98 21.6964 28.6667 23.6786 28.6667 25M43 12.5H9.53674e-07"
-                                                stroke={"#1E1E1E"}
-                                                strokeWidth="2.58333"
-                                            />
-                                        </svg>
-                                    </button>
-                                </div>
+                                                />
+                                            </svg>
+                                            </button>
+                               
+                                        </div>
+                                    ))}
                 </div>
 
                 <div className="togglesection">

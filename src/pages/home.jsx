@@ -62,6 +62,18 @@ const Home = () => {
     const [popupVisible, setPopupVisible] = useState(false);
 const preloaderRef = useRef(null);
 
+const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    visitDate: '',
+    visitTime: '',
+});
+
+const [errors, setErrors] = useState({});
+const [successMsg, setSuccessMsg] = useState('');
+const [submitError, setSubmitError] = useState('');
+
     useEffect(() => {
             const getContent = async () => {
             const res = await supabase.from("webcontent").select("*");
@@ -70,15 +82,16 @@ const preloaderRef = useRef(null);
             setContent(map);
 
             const originsRes = await supabase
-                .from("modern_makeup_origins")  // fix table name (underscore not dot)
-                .select("name, derived_from, description, image_url");
-            
+                .from("modern_makeup_origin")  
+                .select("*");
+        
+
             if (originsRes.data) setOrigins(originsRes.data);
         };
-
+        getContent();
+        
             const getRituals = async() => {
                         const res = await supabase.from("ritual").select("*");
-                        console.log(res.data);
                         setRitual(res.data);
 
                     }
@@ -90,7 +103,7 @@ const preloaderRef = useRef(null);
   const w = window.innerWidth;
   if (w >= 600 && w <= 1024) return { itemWidth: 200, itemsCount: 4 };
   if (w < 600) return { itemWidth: 150, itemsCount: 1 };
-  return { itemWidth: 270, itemsCount: 4 };
+  return { itemWidth: 270, itemsCount: 2 };
 };
 
 const [{ itemWidth, itemsCount }, setResponsive] = useState(getResponsiveValues);
@@ -117,6 +130,53 @@ const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance]);
 
     const increment = () => setNum(num + 1);
     const decrement = () => setNum(num - 1);
+
+    const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: '' });
+};
+
+const validate = () => {
+    const newErrors = {};
+    if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
+    if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
+    if (!formData.email.trim()) newErrors.email = 'Email is required';
+    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Enter a valid email';
+    if (!formData.visitDate) newErrors.visitDate = 'Date is required';
+    if (!formData.visitTime) newErrors.visitTime = 'Please select a time slot';
+    if (num <= 0) newErrors.tickets = 'Add at least 1 ticket';
+    return newErrors;
+};
+
+    const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSuccessMsg('');
+    setSubmitError('');
+
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length > 0) {
+        setErrors(validationErrors);
+        return;
+    }
+
+    const { error } = await supabase.from("booking").insert({
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        email: formData.email,
+        num_tickets: num,
+        visit_date: formData.visitDate,
+        visit_time: formData.visitTime,
+    });
+
+    if (error) {
+        setSubmitError('Something went wrong, please try again.');
+    } else {
+        setSuccessMsg('Your booking is confirmed!');
+        setNum(0);
+        setFormData({ firstName: '', lastName: '', email: '', visitDate: '', visitTime: '' });
+        setErrors({});
+    }
+};
 
     
    useEffect(() => {
@@ -253,7 +313,7 @@ const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance]);
                 </div>
 
                 <div className="section3">
-    {ritual.map((item, index) => (
+                {ritual.map((item, index) => (
                     
                      <div
                         className={index % 2 === 0 ? "categ" : "categs"}
@@ -280,10 +340,6 @@ const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance]);
                     <Title
                        text={content.home_origins_title?.text}
                         description={content.home_origins_title?.desc} />                     
-
-                    <div ref={originsRef} className="origins-scroll-container">
-                        <div className="origins-sticky-wrapper">
-                            <motion.div className="origincont" style={isMobile ? {} : { x }}>
                                 <div ref={originsRef} className="origins-scroll-container">
                                     <div className="origins-sticky-wrapper">
                                         <motion.div className="origincont" style={isMobile ? {} : { x }}>
@@ -301,9 +357,6 @@ const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance]);
                                         </motion.div>
                                     </div>
                                 </div>
-                            </motion.div>
-                        </div>
-                    </div>
                 </div>
                 
                 <div className="section5">
@@ -356,61 +409,62 @@ const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance]);
                         <svg class="formbg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1171 571" fill="none" preserveAspectRatio="none">
                         <path d="M1170 1V225.104C1141.07 225.718 1118 252.917 1118 286.077C1118 319.237 1141.07 346.435 1170 347.049V570H1V347.049C29.9336 346.435 52.9998 319.237 53 286.077C53 252.917 29.9337 225.718 1 225.104V1H1170ZM1072.4 286.028C1072.4 316.403 1093.49 341.343 1120 341.956V546H50V341.956C76.5055 341.343 97.6035 316.403 97.6035 286.028C97.6035 255.653 76.5055 230.713 50 230.1V25H1120V230.1C1093.49 230.713 1072.4 255.653 1072.4 286.028ZM1074.4 286.028C1074.4 256.098 1095.39 232.087 1121 232.087H1122V23H48V232.087H49C74.6088 232.087 95.6035 256.098 95.6035 286.028C95.6035 315.959 74.6088 339.97 49 339.97H48V548H1122V339.97H1121C1095.39 339.97 1074.4 315.959 1074.4 286.028Z" fill="#F0E1CE" stroke="#1E1E1E" stroke-width="2"/>
                         </svg>
-                            <form action="">
+                            <form onSubmit={handleSubmit}>
                                 <div className="row1">
                                     <div className="group">
-                                        <label htmlFor="">First Name</label>
-                                        <input type="text" />
+                                        <label>First Name</label>
+                                        <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} />
+                                        {errors.firstName && <span className="field-error">{errors.firstName}</span>}
                                     </div>
                                     <div className="group">
-                                        <label htmlFor="">Last Name</label>
-                                        <input type="text" />
+                                        <label>Last Name</label>
+                                        <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} />
+                                        {errors.lastName && <span className="field-error">{errors.lastName}</span>}
                                     </div>
-
                                 </div>
                                 <div className="row1">
                                     <div className="group">
-                                        <label htmlFor="">Email</label>
-                                        <input type="text" />
+                                        <label>Email</label>
+                                        <input type="text" name="email" value={formData.email} onChange={handleChange} />
+                                        {errors.email && <span className="field-error">{errors.email}</span>}
                                     </div>
                                     <div className="group">
-                                        <label htmlFor="">Number of tickets</label>
+                                        <label>Number of Tickets</label>
                                         <div className="tick">
-                                        <button className='tickbtn' type="button" onClick={decrement}><img src={minus} alt="" /></button>
-                                        <h1>{num}</h1>
-                                        <button className='tickbtn' type="button" onClick={increment}><img src={plus} alt="" /></button>
+                                            <button className='tickbtn' type="button" onClick={decrement}><img src={minus} alt="" /></button>
+                                            <h1>{num}</h1>
+                                            <button className='tickbtn' type="button" onClick={increment}><img src={plus} alt="" /></button>
                                         </div>
-                                        
+                                        {errors.tickets && <span className="field-error">{errors.tickets}</span>}
                                     </div>
-
                                 </div>
                                 <div className="row1">
                                     <div className="group">
-                                        <label htmlFor="">Date</label>
-                                        <input type="date" />
+                                        <label>Date</label>
+                                        <input type="date" name="visitDate" value={formData.visitDate} onChange={handleChange} />
+                                        {errors.visitDate && <span className="field-error">{errors.visitDate}</span>}
                                     </div>
                                     <div className="group">
-                                    <label htmlFor="time-slot">Date</label>
-                                    <div className="select-wrapper">
-                                        <select id="time-slot">
-                                        <option value="">Select a time</option>
-                                        <option value="9-11am">9 - 11 AM</option>
-                                        <option value="1-3pm">1 - 3 PM</option>
-                                        <option value="4-6pm">4 - 6 PM</option>
-                                        </select>
+                                        <label>Time Slot</label>
+                                        <div className="select-wrapper">
+                                            <select name="visitTime" value={formData.visitTime} onChange={handleChange}>
+                                                <option value="">Select a time</option>
+                                                <option value="09:00:00">9 - 11 AM</option>
+                                                <option value="13:00:00">1 - 3 PM</option>
+                                                <option value="16:00:00">4 - 6 PM</option>
+                                            </select>
+                                        </div>
+                                        {errors.visitTime && <span className="field-error">{errors.visitTime}</span>}
                                     </div>
-                                    </div>
-
                                 </div>
-                                <div className="signup">
-                                <div className="circbutton"></div>
-                                    <h4>{content.home_signup_label?.text}</h4>
 
-                            </div>
-                            <div className="formbtn">
-                                <Primarybtn style="primarybtn" icon={ticket} text="Book Tickets" />
 
-                            </div>
+                                {submitError && <span className="field-error">{submitError}</span>}
+                                {successMsg && <span className="success-msg">{successMsg}</span>}
+
+                                <div className="formbtn">
+                                    <Primarybtn style="primarybtn" icon={ticket} text="Book Tickets" />
+                                </div>
                             </form>
 
                         </div>

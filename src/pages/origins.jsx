@@ -9,16 +9,6 @@ import AnimatedSVG from '../components/originshero';
 import "./origins.css"
 import BlurText from '../blurtext/BlurText';
 import lotus from "../assets/lorus.png"
-import eyeliner from "../assets/eyeliner.png"
-import kohl from "../assets/Kohl.jpg"
-import facemask from "../assets/facemask1.jpg"
-import serums from "../assets/stp6.jpg"
-import milkhoney from "../assets/milkhoney.jpg"
-import oils from "../assets/oils.jpg"
-import eyeshadow from "../assets/eyeshadow.jpg"
-import malachite from "../assets/malachite2.jpg"
-import lipbalm from "../assets/lipbalm.jpg"
-import beeswax from "../assets/beeswax.png"
 import old1 from "../assets/era01.png"
 import old2 from "../assets/era02.png"
 import old3 from "../assets/era03.png"
@@ -26,61 +16,6 @@ import ScrollReveal from "../componentsec2txt/ScrollReveal";
 import { supabase } from "../supabase";
 import Preloader from './preloader';
 
-
-
-const products = [
-  {
-    now: {
-      title: "Waterproof Eyeliner",
-      image: eyeliner,
-    },
-    before: {
-      title: "Kohl (Mesdemet)",
-      image: kohl,
-    },
-  },
-  {
-    now: {
-      title: "Face Masks",
-      image: facemask, 
-    },
-    before: {
-      title: "Milk and Honey",
-      image: milkhoney, 
-    },
-  },
-  {
-    now: {
-      title: "Serums",
-      image: serums,
-    },
-    before: {
-      title: "Natural Oils",
-      image: oils,
-    },
-  },
-  {
-    now: {
-      title: "Eyeshadow",
-      image: eyeshadow,
-    },
-    before: {
-      title: "Malachite",
-      image: malachite,
-    },
-  },
-  {
-    now: {
-      title: "Lip Balm",
-      image: lipbalm,
-    },
-    before: {
-      title: "Beeswax",
-      image: beeswax,
-    },
-  },
-  
-];
 const timelineData = [
   {
     date: "3000BC",
@@ -101,86 +36,106 @@ const timelineData = [
       "Beauty is now a personalized and inclusive experience that blends tradition with innovation. Skincare and makeup emphasize individuality, wellness, and self-expression, with a renewed interest in natural ingredients and ancient practices reinterpreted through modern science and digital culture.", 
   },
 ];
+
 const Origins = () => {
     
   const [menuOpen, setMenuOpen] = useState(false);
-
+  const [products, setProducts] = useState([]);
+  const [productsLoading, setProductsLoading] = useState(true);
   const [productIndex, setProductIndex] = useState(0);
-
   const [showOrigin, setShowOrigin] = useState(false);
   const [imgFading, setImgFading] = useState(false); 
-const [cardFading, setCardFading] = useState(false);
-const [activeEra, setActiveEra] = useState(0);
-const [eraFading, setEraFading] = useState(false);
-const [fontsReady, setFontsReady] = useState(false);
-    const [content, setContent] = useState({});
-     const preloaderRef = useRef(null);
-     const [visible, setVisible] = useState(true);
+  const [cardFading, setCardFading] = useState(false);
+  const [activeEra, setActiveEra] = useState(0);
+  const [eraFading, setEraFading] = useState(false);
+  const [fontsReady, setFontsReady] = useState(false);
+  const [content, setContent] = useState({});
+  const preloaderRef = useRef(null);
+  const [visible, setVisible] = useState(true);
 
 
- useEffect(() => {
-        const getContent = async () => {
-            const res = await supabase.from("webcontent").select("*");
-            const map = {};
-            res.data.forEach(item => { map[item.identifier] = item; });
-            setContent(map);
-        };
-        getContent();
-    }, []);
-useEffect(() => {
-  document.fonts.ready.then(() => {
-    setFontsReady(true);
-  });
-}, []);
+  useEffect(() => {
+    const getContent = async () => {
+      const res = await supabase.from("webcontent").select("*");
+      const map = {};
+      res.data.forEach(item => { map[item.identifier] = item; });
+      setContent(map);
+    };
+    getContent();
+    const fetchProducts = async () => {
+      const { data, error } = await supabase.from("origins_cards").select("*");
+  
+      if (!error && data) {
+        const mapped = data.map(row => ({
+          now: {
+            title: row.new_prod,
+            image: row.new_img,
+          },
+          before: {
+            title: row.old_prod,
+            image: row.old_img,
+          },
+        }));
+        setProducts(mapped);
+      }
+      setProductsLoading(false);
+    };
+    fetchProducts();
+
+ 
+  }, []);
+
+
+  useEffect(() => {
+    document.fonts.ready.then(() => {
+      setFontsReady(true);
+    });
+  }, []);
 
   const currentProduct = products[productIndex];
 
   const handleSeeOrigin = () => {
-  setCardFading(true); 
-  setImgFading(true);
-  
-  setTimeout(() => {
-    setShowOrigin(prev => !prev);  
-    setCardFading(false);    
-    setImgFading(false);
-  }, 400);
-};
+    setCardFading(true); 
+    setImgFading(true);
+    setTimeout(() => {
+      setShowOrigin(prev => !prev);  
+      setCardFading(false);    
+      setImgFading(false);
+    }, 400);
+  };
 
   const handleNextProduct = () => {
     setProductIndex(prev => (prev + 1) % products.length);
     setShowOrigin(false); 
   };
+
   const handleEraChange = (index) => {
-  if (index === activeEra) return;
-  setEraFading(true);
-  setTimeout(() => {
-    setActiveEra(index);
-    setEraFading(false);
-  }, 350);
-};
+    if (index === activeEra) return;
+    setEraFading(true);
+    setTimeout(() => {
+      setActiveEra(index);
+      setEraFading(false);
+    }, 350);
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {
-        preloaderRef.current.style.transition = "transform 0.8s cubic-bezier(0.76, 0, 0.24, 1)";
-        preloaderRef.current.style.transform = "translateY(-100%)";
-
-        setTimeout(() => {
-            setVisible(false);
-        }, 800);
+      preloaderRef.current.style.transition = "transform 0.8s cubic-bezier(0.76, 0, 0.24, 1)";
+      preloaderRef.current.style.transform = "translateY(-100%)";
+      setTimeout(() => {
+        setVisible(false);
+      }, 800);
     }, 2000);
-
     return () => clearTimeout(timer);
-}, []);
+  }, []);
 
-
-  
   return (
     <>
-    {visible && (
-            <div ref={preloaderRef} style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 9999 }}>
-                <Preloader />
-            </div>
-        )}
+      {visible && (
+        <div ref={preloaderRef} style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 9999 }}>
+          <Preloader />
+        </div>
+      )}
       <ClickSpark
         sparkColor="#ffffff"
         sparkSize={10}
@@ -188,16 +143,16 @@ useEffect(() => {
         sparkCount={8}
         duration={400}
       >
-            <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-            <Burger menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+        <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+        <Burger menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         <main>
           <div className="origfirst">
             <div className="herorogins">
               <div className="originsherotxt">
-                            <BlurText text={content.origins_hero_the?.text} delay={200} animateBy="words" direction="top" className="originsub" />
-                            <BlurText text={content.origins_hero_title?.text} delay={300} animateBy="Origins" direction="top" className="originstit" />
-                            <BlurText text={content.origins_hero_beauty?.text} delay={200} animateBy="words" direction="top" className="originsub" />
-                        </div>
+                <BlurText text={content.origins_hero_the?.text} delay={200} animateBy="words" direction="top" className="originsub" />
+                <BlurText text={content.origins_hero_title?.text} delay={300} animateBy="Origins" direction="top" className="originstit" />
+                <BlurText text={content.origins_hero_beauty?.text} delay={200} animateBy="words" direction="top" className="originsub" />
+              </div>
               <div className="anim">
                 <AnimatedSVG duration={7} />
               </div>
@@ -206,37 +161,37 @@ useEffect(() => {
 
           <div className="section2orig">
             <div className="sec2title">
-                <BlurText text={content.origins_sec2_title1?.text} delay={200} animateBy="words" direction="top" className="title1" />
-                <BlurText text={content.origins_sec2_title2?.text} delay={300} animateBy="words" direction="top" className="title2" />
-                <p className='sec2des'>{content.origins_sec2_title2?.desc}</p>
+              <BlurText text={content.origins_sec2_title1?.text} delay={200} animateBy="words" direction="top" className="title1" />
+              <BlurText text={content.origins_sec2_title2?.text} delay={300} animateBy="words" direction="top" className="title2" />
+              <p className='sec2des'>{content.origins_sec2_title2?.desc}</p>
             </div>
 
             <div className="origswitch">
               <img className='lot1' src={lotus} alt="" />
               <img className='lot2' src={lotus} alt="" />
 
+              {productsLoading ? (
+              <div className="origswitch-spinner">
+                <div className="spinner" />
+              </div>
+            ) : currentProduct && (
               <div
                 className={`origswcont ${cardFading ? "fade-out" : "fade-in"}`}
-                style={{
-                    flexDirection: showOrigin ? "row-reverse" : "row",
-                }}
-                >
+                style={{ flexDirection: showOrigin ? "row-reverse" : "row" }}
+              >
                 <div
                   className="changcard"
                   style={{
-                    backgroundColor: showOrigin ? "#1e1e1e" : "",   
-                    color: showOrigin ? "#F0E1CE" : "",             
+                    backgroundColor: showOrigin ? "#1e1e1e" : "",
+                    color: showOrigin ? "#F0E1CE" : "",
                   }}
                 >
                   <h4 style={{ color: showOrigin ? "#F0E1CE" : "" }}>
                     {showOrigin ? "BEFORE" : "NOW"}
                   </h4>
-
                   <div className="deet" style={{ borderColor: showOrigin ? "#F0E1CE" : "#1e1e1e" }}>
                     <h5 style={{ color: showOrigin ? "#F0E1CE" : "" }}>
-                      {showOrigin
-                        ? currentProduct.before.title
-                        : currentProduct.now.title}
+                      {showOrigin ? currentProduct.before.title : currentProduct.now.title}
                     </h5>
                     <Primarybtn
                       style="primarybtn"
@@ -247,14 +202,14 @@ useEffect(() => {
                 </div>
 
                 <div className="changimg">
-                  <img className={imgFading ? "fade-out" : "fade-in"}
-                    src={showOrigin
-                      ? currentProduct.before.image
-                      : currentProduct.now.image}
+                  <img
+                    className={imgFading ? "fade-out" : "fade-in"}
+                    src={showOrigin ? currentProduct.before.image : currentProduct.now.image}
                     alt=""
                   />
                 </div>
               </div>
+            )}
             </div>
 
             <Primarybtn
@@ -265,55 +220,55 @@ useEffect(() => {
           </div>
 
           <div className="timeline">
-                    <div className="timelinecont">
-                        <div className="timelinetxt">
-                            <h1>{content.origins_timeline_title?.text}</h1>
-                            <div className="line">
-                                <div
-                                    className="point"
-                                    style={{
-                                        position: "absolute",
-                                        left: activeEra === 0 ? "0%" : activeEra === 1 ? "50%" : "100%",
-                                        transform: "translateX(-50%)",
-                                        transition: "left 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
-                                    }}
-                                ></div>
-                                <div className="linet"></div>
-                            </div>
-                            <div className="dates">
-                                {timelineData.map((era, index) => (
-                                    <h1
-                                        key={era.date}
-                                        className={index !== activeEra ? "inactivedate" : ""}
-                                        onClick={() => handleEraChange(index)}
-                                        style={{ cursor: "pointer" }}
-                                    >
-                                        {era.date}
-                                    </h1>
-                                ))}
-                            </div>
-                        </div>
-                        <div className={`timelineimg ${eraFading ? "fade-out" : "fade-in"}`}>
-                            <img src={timelineData[activeEra].image} alt={timelineData[activeEra].date} />
-                            <p>{timelineData[activeEra].description}</p>
-                        </div>
-                    </div>
+            <div className="timelinecont">
+              <div className="timelinetxt">
+                <h1>{content.origins_timeline_title?.text}</h1>
+                <div className="line">
+                  <div
+                    className="point"
+                    style={{
+                      position: "absolute",
+                      left: activeEra === 0 ? "0%" : activeEra === 1 ? "50%" : "100%",
+                      transform: "translateX(-50%)",
+                      transition: "left 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+                    }}
+                  ></div>
+                  <div className="linet"></div>
                 </div>
-
-        <div className="textcont">
-                    {fontsReady && (
-                    <ScrollReveal
-                    key="scroll-reveal-ready"
-                    baseOpacity={0.1}
-                    enableBlur
-                    baseRotation={0}
-                    blurStrength={4}
-                    wordAnimationEnd="bottom 50%"
+                <div className="dates">
+                  {timelineData.map((era, index) => (
+                    <h1
+                      key={era.date}
+                      className={index !== activeEra ? "inactivedate" : ""}
+                      onClick={() => handleEraChange(index)}
+                      style={{ cursor: "pointer" }}
                     >
-                    While modern beauty has evolved in form, its essence remains unchanged. The ingredients, intentions, and rituals developed in Ancient Egypt continue to shape how we define and practice beauty today.
-                    </ScrollReveal>
-                )}
-                    </div>
+                      {era.date}
+                    </h1>
+                  ))}
+                </div>
+              </div>
+              <div className={`timelineimg ${eraFading ? "fade-out" : "fade-in"}`}>
+                <img src={timelineData[activeEra].image} alt={timelineData[activeEra].date} />
+                <p>{timelineData[activeEra].description}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="textcont">
+            {fontsReady && (
+              <ScrollReveal
+                key="scroll-reveal-ready"
+                baseOpacity={0.1}
+                enableBlur
+                baseRotation={0}
+                blurStrength={4}
+                wordAnimationEnd="bottom 50%"
+              >
+                While modern beauty has evolved in form, its essence remains unchanged. The ingredients, intentions, and rituals developed in Ancient Egypt continue to shape how we define and practice beauty today.
+              </ScrollReveal>
+            )}
+          </div>
 
           <Footer />
         </main>

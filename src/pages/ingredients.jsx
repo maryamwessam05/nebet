@@ -104,75 +104,75 @@ const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance]);
             <main>
                 <div className="ingredfirst">
 
-                <div className="heroingredients">
-                <div className="ingherotxt">
-                    <BlurText text={content.ingredients_hero_the?.text} delay={200} animateBy="words" direction="top" className="originsub" />
-                    <BlurText text={content.ingredients_hero_title?.text} delay={400} animateBy="Origins" direction="top" className="originstit" />
-                </div>
-                <div className="cardsel">
-                    <TiltedCard
-                    imageSrc={honey}
-                    containerHeight="300px"
-                    containerWidth="220px"
-                    imageHeight="100%"
-                    imageWidth="100%"
-                    rotateAmplitude={12}
-                    scaleOnHover={1.05}
-                    showMobileWarning={false}
-                    showTooltip
-                    captionText="Honey"
-                    />
-                    <TiltedCard
-                    imageSrc={lotus}
-                    containerHeight="357px"
-                    containerWidth="240px"
-                    imageHeight="100%"
-                    imageWidth="100%"
-                    rotateAmplitude={12}
-                    scaleOnHover={1.05}
-                    showMobileWarning={false}
-                    showTooltip
-                    captionText="Blue Lotus"
-                    />
-                    <TiltedCard
-                    imageSrc={kohl}
-                    containerHeight="400px"
-                    containerWidth="300px"
-                    imageHeight="100%"
-                    imageWidth="100%"
-                    rotateAmplitude={12}
-                    scaleOnHover={1.05}
-                    showMobileWarning={false}
-                    showTooltip
-                    captionText="Charcoal"
-                    />
-                    <TiltedCard
-                    imageSrc={ochre}
-                    containerHeight="357px"
-                    containerWidth="240px"
-                    imageHeight="100%"
-                    imageWidth="100%"
-                    rotateAmplitude={12}
-                    scaleOnHover={1.05}
-                    showMobileWarning={false}
-                    showTooltip
-                    captionText="Ochre"
-                    />
-                    <TiltedCard
-                    imageSrc={beeswax}
-                    containerHeight="300px"
-                    containerWidth="220px"
-                    imageHeight="100%"
-                    imageWidth="100%"
-                    rotateAmplitude={12}
-                    scaleOnHover={1.05}
-                    showMobileWarning={false}
-                    showTooltip
-                    captionText="Beeswax"
-                    />
+                    <div className="heroingredients">
+                    <div className="ingherotxt">
+                        <BlurText text={content.ingredients_hero_the?.text} delay={200} animateBy="words" direction="top" className="originsub" />
+                        <BlurText text={content.ingredients_hero_title?.text} delay={400} animateBy="Origins" direction="top" className="originstit" />
+                    </div>
+                    <div className="cardsel">
+                        <TiltedCard
+                        imageSrc={honey}
+                        containerHeight="300px"
+                        containerWidth="220px"
+                        imageHeight="100%"
+                        imageWidth="100%"
+                        rotateAmplitude={12}
+                        scaleOnHover={1.05}
+                        showMobileWarning={false}
+                        showTooltip
+                        captionText="Honey"
+                        />
+                        <TiltedCard
+                        imageSrc={lotus}
+                        containerHeight="357px"
+                        containerWidth="240px"
+                        imageHeight="100%"
+                        imageWidth="100%"
+                        rotateAmplitude={12}
+                        scaleOnHover={1.05}
+                        showMobileWarning={false}
+                        showTooltip
+                        captionText="Blue Lotus"
+                        />
+                        <TiltedCard
+                        imageSrc={kohl}
+                        containerHeight="400px"
+                        containerWidth="300px"
+                        imageHeight="100%"
+                        imageWidth="100%"
+                        rotateAmplitude={12}
+                        scaleOnHover={1.05}
+                        showMobileWarning={false}
+                        showTooltip
+                        captionText="Charcoal"
+                        />
+                        <TiltedCard
+                        imageSrc={ochre}
+                        containerHeight="357px"
+                        containerWidth="240px"
+                        imageHeight="100%"
+                        imageWidth="100%"
+                        rotateAmplitude={12}
+                        scaleOnHover={1.05}
+                        showMobileWarning={false}
+                        showTooltip
+                        captionText="Ochre"
+                        />
+                        <TiltedCard
+                        imageSrc={beeswax}
+                        containerHeight="300px"
+                        containerWidth="220px"
+                        imageHeight="100%"
+                        imageWidth="100%"
+                        rotateAmplitude={12}
+                        scaleOnHover={1.05}
+                        showMobileWarning={false}
+                        showTooltip
+                        captionText="Beeswax"
+                        />
 
-                </div>
-                </div>
+                    </div>
+                    </div>
                     
                 </div>
 
