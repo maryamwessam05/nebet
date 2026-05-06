@@ -63,13 +63,10 @@ const Home = () => {
 const preloaderRef = useRef(null);
 
 const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    full_name: '',
     email: '',
-    visitDate: '',
-    visitTime: '',
+    msgcontent: '',
 });
-
 const [errors, setErrors] = useState({});
 const [successMsg, setSuccessMsg] = useState('');
 const [submitError, setSubmitError] = useState('');
@@ -138,13 +135,10 @@ const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance]);
 
 const validate = () => {
     const newErrors = {};
-    if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
-    if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
+    if (!formData.full_name.trim()) newErrors.full_name = 'Name is required';
     if (!formData.email.trim()) newErrors.email = 'Email is required';
     else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Enter a valid email';
-    if (!formData.visitDate) newErrors.visitDate = 'Date is required';
-    if (!formData.visitTime) newErrors.visitTime = 'Please select a time slot';
-    if (num <= 0) newErrors.tickets = 'Add at least 1 ticket';
+    if (!formData.msgcontent.trim()) newErrors.msgcontent = 'Message is required';
     return newErrors;
 };
 
@@ -159,21 +153,19 @@ const validate = () => {
         return;
     }
 
-    const { error } = await supabase.from("booking").insert({
-        first_name: formData.firstName,
-        last_name: formData.lastName,
+    const { error } = await supabase.from("messages").insert({
+        full_name: formData.full_name,
         email: formData.email,
-        num_tickets: num,
-        visit_date: formData.visitDate,
-        visit_time: formData.visitTime,
+        msgcontent: formData.msgcontent,
+        date: new Date().toISOString().split('T')[0],
+        status: 'new',
     });
 
     if (error) {
         setSubmitError('Something went wrong, please try again.');
     } else {
-        setSuccessMsg('Your booking is confirmed!');
-        setNum(0);
-        setFormData({ firstName: '', lastName: '', email: '', visitDate: '', visitTime: '' });
+        setSuccessMsg('Your message has been sent!');
+        setFormData({ full_name: '', email: '', msgcontent: '' });
         setErrors({});
     }
 };
@@ -401,7 +393,7 @@ const validate = () => {
                 </div>
 
                 <div className="section6">
-                    <Title text={content.home_experience_title?.text} />
+                    <Title text="Any Inquiries?" />
                    
                     <div className="sec6cont">
                         <img src={formbgb} alt="" />
@@ -409,64 +401,32 @@ const validate = () => {
                         <svg class="formbg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1171 571" fill="none" preserveAspectRatio="none">
                         <path d="M1170 1V225.104C1141.07 225.718 1118 252.917 1118 286.077C1118 319.237 1141.07 346.435 1170 347.049V570H1V347.049C29.9336 346.435 52.9998 319.237 53 286.077C53 252.917 29.9337 225.718 1 225.104V1H1170ZM1072.4 286.028C1072.4 316.403 1093.49 341.343 1120 341.956V546H50V341.956C76.5055 341.343 97.6035 316.403 97.6035 286.028C97.6035 255.653 76.5055 230.713 50 230.1V25H1120V230.1C1093.49 230.713 1072.4 255.653 1072.4 286.028ZM1074.4 286.028C1074.4 256.098 1095.39 232.087 1121 232.087H1122V23H48V232.087H49C74.6088 232.087 95.6035 256.098 95.6035 286.028C95.6035 315.959 74.6088 339.97 49 339.97H48V548H1122V339.97H1121C1095.39 339.97 1074.4 315.959 1074.4 286.028Z" fill="#F0E1CE" stroke="#1E1E1E" stroke-width="2"/>
                         </svg>
-                            <form onSubmit={handleSubmit}>
-                                <div className="row1">
-                                    <div className="group">
-                                        <label>First Name</label>
-                                        <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} />
-                                        {errors.firstName && <span className="field-error">{errors.firstName}</span>}
-                                    </div>
-                                    <div className="group">
-                                        <label>Last Name</label>
-                                        <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} />
-                                        {errors.lastName && <span className="field-error">{errors.lastName}</span>}
-                                    </div>
+                           <form onSubmit={handleSubmit}>
+                            <div className="row1">
+                                <div className="group">
+                                    <label>Full Name</label>
+                                    <input type="text" name="full_name" value={formData.full_name} onChange={handleChange} />
+                                    {errors.full_name && <span className="field-error">{errors.full_name}</span>}
                                 </div>
-                                <div className="row1">
-                                    <div className="group">
-                                        <label>Email</label>
-                                        <input type="text" name="email" value={formData.email} onChange={handleChange} />
-                                        {errors.email && <span className="field-error">{errors.email}</span>}
-                                    </div>
-                                    <div className="group">
-                                        <label>Number of Tickets</label>
-                                        <div className="tick">
-                                            <button className='tickbtn' type="button" onClick={decrement}><img src={minus} alt="" /></button>
-                                            <h1>{num}</h1>
-                                            <button className='tickbtn' type="button" onClick={increment}><img src={plus} alt="" /></button>
-                                        </div>
-                                        {errors.tickets && <span className="field-error">{errors.tickets}</span>}
-                                    </div>
+                                <div className="group">
+                                    <label>Email</label>
+                                    <input type="text" name="email" value={formData.email} onChange={handleChange} />
+                                    {errors.email && <span className="field-error">{errors.email}</span>}
                                 </div>
-                                <div className="row1">
-                                    <div className="group">
-                                        <label>Date</label>
-                                        <input type="date" name="visitDate" value={formData.visitDate} onChange={handleChange} />
-                                        {errors.visitDate && <span className="field-error">{errors.visitDate}</span>}
-                                    </div>
-                                    <div className="group">
-                                        <label>Time Slot</label>
-                                        <div className="select-wrapper">
-                                            <select name="visitTime" value={formData.visitTime} onChange={handleChange}>
-                                                <option value="">Select a time</option>
-                                                <option value="09:00:00">9 - 11 AM</option>
-                                                <option value="13:00:00">1 - 3 PM</option>
-                                                <option value="16:00:00">4 - 6 PM</option>
-                                            </select>
-                                        </div>
-                                        {errors.visitTime && <span className="field-error">{errors.visitTime}</span>}
-                                    </div>
-                                </div>
+                            </div>
+                            <div className="group2">
+                                <label>Message</label>
+                                <textarea name="msgcontent" value={formData.msgcontent} onChange={handleChange} rows={4} />
+                                {errors.msgcontent && <span className="field-error">{errors.msgcontent}</span>}
+                            </div>
 
+                            {submitError && <span className="field-error">{submitError}</span>}
+                            {successMsg && <span className="success-msg">{successMsg}</span>}
 
-                                {submitError && <span className="field-error">{submitError}</span>}
-                                {successMsg && <span className="success-msg">{successMsg}</span>}
-
-                                <div className="formbtn">
-                                    <Primarybtn style="primarybtn" icon={ticket} text="Book Tickets" />
-                                </div>
-                            </form>
-
+                            <div className="formbtn">
+                                <Primarybtn style="primarybtn" icon={ticket} text="Send Message" />
+                            </div>
+                        </form>
                         </div>
                         <img  src={formbgb} alt="" />
 
