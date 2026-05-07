@@ -23,29 +23,25 @@ import { supabase } from "../supabase";
 import Preloader from './preloader';
 
 
-
-
 const Experience = () => {
-                const [menuOpen, setMenuOpen] = useState(false);
-                    const [num, setNum] = useState(0);
-                    const [content, setContent] = useState({});
-                    const preloaderRef = useRef(null);
-const [visible, setVisible] = useState(true);
-const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    visitDate: '',
-    visitTime: '',
-});
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [num, setNum] = useState(0);
+    const [content, setContent] = useState({});
+    const preloaderRef = useRef(null);
+    const [visible, setVisible] = useState(true);
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        visitDate: '',
+        visitTime: '',
+    });
+    const [errors, setErrors] = useState({});
+    const [successMsg, setSuccessMsg] = useState('');
+    const [submitError, setSubmitError] = useState('');
+    const [eventdata, setEventdata] = useState([]); // ✅ fixed: was "" before
 
-const [errors, setErrors] = useState({});
-const [successMsg, setSuccessMsg] = useState('');
-const [submitError, setSubmitError] = useState('');
-const [eventdata , setEventdata] = useState("")
-
-                    
- useEffect(() => {
+    useEffect(() => {
         const getContent = async () => {
             const res = await supabase.from("webcontent").select("*");
             const map = {};
@@ -56,43 +52,76 @@ const [eventdata , setEventdata] = useState("")
 
         const getEventdata = async () => {
             const res = await supabase.from("exhibit").select("*");
-            setEventdata(res.data)
+            console.log("Exhibit data:", res.data); 
+            setEventdata(res.data || []);
         };
         getEventdata();
     }, []);
 
+    const increment = () => setNum(prev => prev + 1);
+    const decrement = () => setNum(prev => Math.max(0, prev - 1));
 
-        const increment = () => setNum(num + 1);
-    const decrement = () => setNum(num - 1);
-
-        const handleChange = (e) => {
+    const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
         setErrors({ ...errors, [e.target.name]: '' });
     };
-    
+
+    const isExhibitAvailable = () => {
+        const exhibit = eventdata?.[0];
+        if (!exhibit) return true;
+
+        const start = exhibit.exhibit_date?.slice(0, 10);
+        const end = exhibit.exhibit_enddate?.slice(0, 10);
+
+        if (!start || !end) return true; 
+
+        const today = new Date().toISOString().slice(0, 10);
+        return today >= start && today <= end;
+    };
+
     const validate = () => {
         const newErrors = {};
+
         if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
         if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
         if (!formData.email.trim()) newErrors.email = 'Email is required';
         else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Enter a valid email';
-        if (!formData.visitDate) newErrors.visitDate = 'Date is required';
+
+        if (!formData.visitDate) {
+            newErrors.visitDate = 'Date is required';
+        } else {
+            const exhibit = eventdata?.[0];
+            const start = exhibit?.start_date?.slice(0, 10);
+            const end = exhibit?.end_date?.slice(0, 10);
+            const selected = formData.visitDate; // already "YYYY-MM-DD"
+
+            console.log("Date check → selected:", selected, "| start:", start, "| end:", end);
+
+            if (start && end && (selected < start || selected > end)) {
+                const fmt = (d) => new Date(d + 'T00:00:00').toLocaleDateString('en-GB', {
+                    day: 'numeric', month: 'long', year: 'numeric'
+                });
+                newErrors.visitDate = `This exhibit is unavailable on that date. It runs from ${fmt(start)} to ${fmt(end)}.`;
+            }
+        }
+
         if (!formData.visitTime) newErrors.visitTime = 'Please select a time slot';
         if (num <= 0) newErrors.tickets = 'Add at least 1 ticket';
+
         return newErrors;
     };
-    
-        const handleSubmit = async (e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setSuccessMsg('');
         setSubmitError('');
-    
+
         const validationErrors = validate();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             return;
         }
-    
+
         const { error } = await supabase.from("booking").insert({
             first_name: formData.firstName,
             last_name: formData.lastName,
@@ -101,7 +130,7 @@ const [eventdata , setEventdata] = useState("")
             visit_date: formData.visitDate,
             visit_time: formData.visitTime,
         });
-    
+
         if (error) {
             setSubmitError('Something went wrong, please try again.');
         } else {
@@ -112,170 +141,156 @@ const [eventdata , setEventdata] = useState("")
         }
     };
 
-      useEffect(() => {
-    const timer = setTimeout(() => {
-        preloaderRef.current.style.transition = "transform 0.8s cubic-bezier(0.76, 0, 0.24, 1)";
-        preloaderRef.current.style.transform = "translateY(-100%)";
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            preloaderRef.current.style.transition = "transform 0.8s cubic-bezier(0.76, 0, 0.24, 1)";
+            preloaderRef.current.style.transform = "translateY(-100%)";
+            setTimeout(() => setVisible(false), 800);
+        }, 2000);
+        return () => clearTimeout(timer);
+    }, []);
 
-        setTimeout(() => {
-            setVisible(false);
-        }, 800);
-    }, 2000);
+    const exhibit = eventdata?.[0];
+    const startDate = exhibit?.start_date?.slice(0, 10);
+    const endDate = exhibit?.end_date?.slice(0, 10);
 
-    return () => clearTimeout(timer);
-}, []);
-
-    return ( 
+    return (
         <>
-        {visible && (
-            <div ref={preloaderRef} style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 9999 }}>
-                <Preloader />
-            </div>
-        )}
-           <ClickSpark
-        sparkColor="#ffffff"
-        sparkSize={10}
-        sparkRadius={15}
-        sparkCount={8}
-        duration={400}
-        >
-                    <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-                    <Burger menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-            <main>
-                <div className="first">
-                    <div className="exhertxt">
-                    <div className="ingherotxt">
-                        <BlurText text={content.experience_hero_the?.text} delay={200} animateBy="words" direction="top" className="originsub" />
-                        <BlurText text={content.experience_hero_title?.text} delay={400} animateBy="Origins" direction="top" className="originstit" />
+            {visible && (
+                <div ref={preloaderRef} style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 9999 }}>
+                    <Preloader />
+                </div>
+            )}
+            <ClickSpark sparkColor="#ffffff" sparkSize={10} sparkRadius={15} sparkCount={8} duration={400}>
+                <Navbar menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+                <Burger menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+                <main>
+                    <div className="first">
+                        <div className="exhertxt">
+                            <div className="ingherotxt">
+                                <BlurText text={content.experience_hero_the?.text} delay={200} animateBy="words" direction="top" className="originsub" />
+                                <BlurText text={content.experience_hero_title?.text} delay={400} animateBy="Origins" direction="top" className="originstit" />
+                            </div>
+                        </div>
+                        <Preview />
                     </div>
 
+                    <div className="whatto">
+                        <Title text={content.experience_whatto_title?.text} />
+                        <div className="expectgrid">
+                            <Expect style="exdark" stylexp="exptxt" title="Immersive Exploration" desc="Experience rituals through interactive visuals and storytelling." img={ex1} />
+                            <Expect style="exlight" stylexp="exptxtl" title="Ritual-Based Displays" desc="Discover how beauty was practiced step by step." img={ex2} />
+                            <Expect style="exdark" stylexp="exptxt" title="Sensory Atmosphere" desc="A space designed to reflect the essence of ancient practices." img={ex3} />
+                        </div>
                     </div>
-                    <Preview />
-                </div>
-                <div className="whatto">
-                    <Title text={content.experience_whatto_title?.text} />
-                    
-                    <div className="expectgrid">
-                        <Expect style="exdark" stylexp="exptxt" title="Immersive Exploration" desc="Experience rituals through interactive visuals and storytelling." img={ex1} />
-                        <Expect style="exlight" stylexp="exptxtl" title="Ritual-Based Displays" desc="Discover how beauty was practiced step by step." img={ex2} />
-                        <Expect style="exdark" stylexp="exptxt" title="Sensory Atmosphere" desc="A space designed to reflect the essence of ancient practices." img={ex3} />
 
+                    <div className="eventcard">
+                        <div className="beige">
+                            <div className="beigetxt">
+                                <h3>{exhibit?.name || "About NEBET"}</h3>
+                                <p>{exhibit?.description}</p>
+                            </div>
+                        </div>
+                        <div className="greycard">
+                            <div className="gretxt">
+                                <h3>Details</h3>
+                                <div className="detpair"><h6>Duration</h6><p>{exhibit?.duration}</p></div>
+                                <div className="detpair"><h6>Format</h6><p>{exhibit?.format}</p></div>
+                                <div className="detpair"><h6>Type</h6><p>{exhibit?.entry_type}</p></div>
+                                <div className="detpair"><h6>Location</h6><p>{exhibit?.location}</p></div>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div className="eventcard">
-                <div className="beige">
-                    <div className="beigetxt">
-                        <h3>{eventdata?.[0]?.name || "About NEBET"}</h3>
-                        <p>{eventdata?.[0]?.description}</p>
-                    </div>
-                </div>
-                <div className="greycard">
-                    <div className="gretxt">
-                        <h3>Details</h3>
-                        <div className="detpair">
-                            <h6>Duration</h6>
-                            <p>{eventdata?.[0]?.duration}</p>
-                        </div>
-                        <div className="detpair">
-                            <h6>Format</h6>
-                            <p>{eventdata?.[0]?.format}</p>
-                        </div>
-                        <div className="detpair">
-                            <h6>Type</h6>
-                            <p>{eventdata?.[0]?.entry_type}</p>
-                        </div>
-                        <div className="detpair">
-                            <h6>Location</h6>
-                            <p>{eventdata?.[0]?.location}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    <div className="section6">
+                        <Title text={content.home_experience_title?.text} />
+                        <div className="sec6cont">
+                            <div className="sec6form">
+                                <svg className="formbg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1171 571" fill="none" preserveAspectRatio="none">
+                                    <path d="M1170 1V225.104C1141.07 225.718 1118 252.917 1118 286.077C1118 319.237 1141.07 346.435 1170 347.049V570H1V347.049C29.9336 346.435 52.9998 319.237 53 286.077C53 252.917 29.9337 225.718 1 225.104V1H1170ZM1072.4 286.028C1072.4 316.403 1093.49 341.343 1120 341.956V546H50V341.956C76.5055 341.343 97.6035 316.403 97.6035 286.028C97.6035 255.653 76.5055 230.713 50 230.1V25H1120V230.1C1093.49 230.713 1072.4 255.653 1072.4 286.028ZM1074.4 286.028C1074.4 256.098 1095.39 232.087 1121 232.087H1122V23H48V232.087H49C74.6088 232.087 95.6035 256.098 95.6035 286.028C95.6035 315.959 74.6088 339.97 49 339.97H48V548H1122V339.97H1121C1095.39 339.97 1074.4 315.959 1074.4 286.028Z" fill="#F0E1CE" stroke="#1E1E1E" strokeWidth="2"/>
+                                </svg>
 
-                <div className="section6">
-                    <Title text={content.home_experience_title?.text} />
-                   
-                    <div className="sec6cont">
-                        
-                        <div className="sec6form">
-                        <svg class="formbg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1171 571" fill="none" preserveAspectRatio="none">
-                        <path d="M1170 1V225.104C1141.07 225.718 1118 252.917 1118 286.077C1118 319.237 1141.07 346.435 1170 347.049V570H1V347.049C29.9336 346.435 52.9998 319.237 53 286.077C53 252.917 29.9337 225.718 1 225.104V1H1170ZM1072.4 286.028C1072.4 316.403 1093.49 341.343 1120 341.956V546H50V341.956C76.5055 341.343 97.6035 316.403 97.6035 286.028C97.6035 255.653 76.5055 230.713 50 230.1V25H1120V230.1C1093.49 230.713 1072.4 255.653 1072.4 286.028ZM1074.4 286.028C1074.4 256.098 1095.39 232.087 1121 232.087H1122V23H48V232.087H49C74.6088 232.087 95.6035 256.098 95.6035 286.028C95.6035 315.959 74.6088 339.97 49 339.97H48V548H1122V339.97H1121C1095.39 339.97 1074.4 315.959 1074.4 286.028Z" fill="#F0E1CE" stroke="#1E1E1E" stroke-width="2"/>
-                        </svg>
-                            <form onSubmit={handleSubmit}>
-                                <div className="row1">
-                                    <div className="group">
-                                        <label>First Name</label>
-                                        <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} />
-                                        {errors.firstName && <span className="field-error">{errors.firstName}</span>}
+                                {/* ✅ Show unavailability banner if today is outside exhibit range */}
+                                {!isExhibitAvailable() && (
+                                    <div className="exhibit-unavailable">
+                                        <p>This exhibit is currently unavailable for booking.</p>
+                                        {startDate && endDate && (
+                                            <p>It runs from {new Date(startDate + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} to {new Date(endDate + 'T00:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+                                        )}
                                     </div>
-                                    <div className="group">
-                                        <label>Last Name</label>
-                                        <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} />
-                                        {errors.lastName && <span className="field-error">{errors.lastName}</span>}
-                                    </div>
-                                </div>
-                                <div className="row1">
-                                    <div className="group">
-                                        <label>Email</label>
-                                        <input type="text" name="email" value={formData.email} onChange={handleChange} />
-                                        {errors.email && <span className="field-error">{errors.email}</span>}
-                                    </div>
-                                    <div className="group">
-                                        <label>Number of Tickets</label>
-                                        <div className="tick">
-                                            <button className='tickbtn' type="button" onClick={decrement}><img src={minus} alt="" /></button>
-                                            <h1>{num}</h1>
-                                            <button className='tickbtn' type="button" onClick={increment}><img src={plus} alt="" /></button>
+                                )}
+
+                                <form onSubmit={handleSubmit}>
+                                    <div className="row1">
+                                        <div className="group">
+                                            <label>First Name</label>
+                                            <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} />
+                                            {errors.firstName && <span className="field-error">{errors.firstName}</span>}
                                         </div>
-                                        {errors.tickets && <span className="field-error">{errors.tickets}</span>}
-                                    </div>
-                                </div>
-                                <div className="row1">
-                                    <div className="group">
-                                        <label>Date</label>
-                                        <input type="date" name="visitDate" value={formData.visitDate} onChange={handleChange} />
-                                        {errors.visitDate && <span className="field-error">{errors.visitDate}</span>}
-                                    </div>
-                                    <div className="group">
-                                        <label>Time Slot</label>
-                                        <div className="select-wrapper">
-                                            <select name="visitTime" value={formData.visitTime} onChange={handleChange}>
-                                                <option value="">Select a time</option>
-                                                <option value="09:00:00">9 - 11 AM</option>
-                                                <option value="13:00:00">1 - 3 PM</option>
-                                                <option value="16:00:00">4 - 6 PM</option>
-                                            </select>
+                                        <div className="group">
+                                            <label>Last Name</label>
+                                            <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} />
+                                            {errors.lastName && <span className="field-error">{errors.lastName}</span>}
                                         </div>
-                                        {errors.visitTime && <span className="field-error">{errors.visitTime}</span>}
                                     </div>
-                                </div>
+                                    <div className="row1">
+                                        <div className="group">
+                                            <label>Email</label>
+                                            <input type="text" name="email" value={formData.email} onChange={handleChange} />
+                                            {errors.email && <span className="field-error">{errors.email}</span>}
+                                        </div>
+                                        <div className="group">
+                                            <label>Number of Tickets</label>
+                                            <div className="tick">
+                                                <button className='tickbtn' type="button" onClick={decrement}><img src={minus} alt="" /></button>
+                                                <h1>{num}</h1>
+                                                <button className='tickbtn' type="button" onClick={increment}><img src={plus} alt="" /></button>
+                                            </div>
+                                            {errors.tickets && <span className="field-error">{errors.tickets}</span>}
+                                        </div>
+                                    </div>
+                                    <div className="row1">
+                                        <div className="group">
+                                            <label>Date</label>
+                                            <input
+                                                type="date"
+                                                name="visitDate"
+                                                value={formData.visitDate}
+                                                onChange={handleChange}
+                                                min={startDate || undefined}
+                                                max={endDate || undefined}
+                                            />
+                                            {errors.visitDate && <span className="field-error">{errors.visitDate}</span>}
+                                        </div>
+                                        <div className="group">
+                                            <label>Time Slot</label>
+                                            <div className="select-wrapper">
+                                                <select name="visitTime" value={formData.visitTime} onChange={handleChange}>
+                                                    <option value="">Select a time</option>
+                                                    <option value="09:00:00">9 - 11 AM</option>
+                                                    <option value="13:00:00">1 - 3 PM</option>
+                                                    <option value="16:00:00">4 - 6 PM</option>
+                                                </select>
+                                            </div>
+                                            {errors.visitTime && <span className="field-error">{errors.visitTime}</span>}
+                                        </div>
+                                    </div>
 
+                                    {submitError && <span className="field-error">{submitError}</span>}
+                                    {successMsg && <span className="success-msg">{successMsg}</span>}
 
-                                {submitError && <span className="field-error">{submitError}</span>}
-                                {successMsg && <span className="success-msg">{successMsg}</span>}
-
-                                <div className="formbtn">
-                                    <Primarybtn style="primarybtn" icon={ticket} text="Book Tickets" />
-                                </div>
-                            </form>
-
+                                    <div className="formbtn">
+                                        <Primarybtn style="primarybtn" icon={ticket} text="Book Tickets" />
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        
-
-                        
-
-
-                        
                     </div>
-                </div>
-                <Footer />
-
-            </main>
-
-        </ClickSpark>
+                    <Footer />
+                </main>
+            </ClickSpark>
         </>
-     );
+    );
 }
- 
+
 export default Experience;
