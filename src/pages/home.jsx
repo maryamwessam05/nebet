@@ -58,6 +58,8 @@ const Home = () => {
         const [origins, setOrigins] = useState([]);
 
         const [ritual, setRitual] = useState([]);
+        const [event, setEvent] = useState([]);
+
     const [visible, setVisible] = useState(true);
     const [popupVisible, setPopupVisible] = useState(false);
 const preloaderRef = useRef(null);
@@ -93,6 +95,14 @@ const [submitError, setSubmitError] = useState('');
 
                     }
                     getRituals();
+
+             const getEvent = async() => {
+                        const res = await supabase.from("exhibit").select("*");
+                        setEvent(res.data);
+
+                    }
+                    getEvent();
+
         }, []);
 
     const getResponsiveValues = () => {
@@ -208,9 +218,17 @@ const validate = () => {
                         
                         <div className="poplogo">
                             <img src={verlogo} alt="" />
-                            <h4>THE EXHIBIT</h4>
+                            <h4 className='popdate'>THE EXHIBIT</h4>
                         </div>
-                        <h1>ON 13.11.2026</h1>
+                        <h1>
+                            {event[0]?.exhibit_date
+                                ? `ON ${new Date(event[0].exhibit_date).toLocaleDateString('en-GB', {
+                                    day: '2-digit',
+                                    month: '2-digit',
+                                    year: 'numeric'
+                                }).replace(/\//g, '.')}`
+                                : 'COMING SOON'}
+                        </h1>
                         <div className="btns">
                             <Link to="/experience">
                                 <Primarybtn style="primarybtn" text="Book Tickets" icon={ticket} />
