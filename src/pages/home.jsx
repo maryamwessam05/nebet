@@ -1,4 +1,5 @@
 import React, { useState, useRef , useEffect } from 'react';
+import { useLocation } from "react-router-dom";
 import "./home.css";
 import Navbar from '../components/navbar';
 import { Link } from 'react-router-dom';
@@ -254,9 +255,6 @@ const validate = () => {
                                 <img src={hier3} alt="" />
                                 <img src={hier4} alt="" />
                                 <img src={hier2} alt="" />
-                                <img src={hier4} alt="" />
-                                <img src={hier2} alt="" />
-                                <img src={hier3} alt="" />
                                 <img src={hier4} alt="" />
                                 <img src={hier2} alt="" />
                             </div>

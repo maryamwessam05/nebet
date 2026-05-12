@@ -6,6 +6,7 @@ import Origins from './origins';
 import Ingredients from './ingredients';
 import Experience from './experience';
 import Error from './error';
+import ScrollToTop from './components/ScrollToTop';
 
 
 const AppRoutes = () => {
@@ -13,6 +14,7 @@ const AppRoutes = () => {
         <>
 
             <BrowserRouter>
+            <ScrollToTop /> 
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/rituals" element={<Rituals />} />

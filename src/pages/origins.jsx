@@ -118,24 +118,11 @@ const Origins = () => {
     }, 350);
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      preloaderRef.current.style.transition = "transform 0.8s cubic-bezier(0.76, 0, 0.24, 1)";
-      preloaderRef.current.style.transform = "translateY(-100%)";
-      setTimeout(() => {
-        setVisible(false);
-      }, 800);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <>
-      {visible && (
-        <div ref={preloaderRef} style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 9999 }}>
-          <Preloader />
-        </div>
-      )}
+     
+    
       <ClickSpark
         sparkColor="#ffffff"
         sparkSize={10}
